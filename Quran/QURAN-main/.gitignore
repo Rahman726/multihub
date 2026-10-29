@@ -1,0 +1,25 @@
+# Temporary files
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backup files
+*~
+*.bak
+
+# Windsurf temp files
+naats_*.html
+naats_content.html
+naats_more.html
+naats_remaining.html
+naats_final.html
+naats_part*.html
+naats_js.html
+naats_end.html

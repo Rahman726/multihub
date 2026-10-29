@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>🌙 اسلامی ایپ - Islamic App Collection</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+      min-height: 100vh;
+      font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .main-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      padding: 40px 30px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .app-logo {
+      font-size: 4rem;
+      margin-bottom: 10px;
+    }
+
+    .app-title {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #1e3c72, #7e22ce);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .app-subtitle {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .menu-btn {
+      background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 25px;
+      padding: 25px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .menu-btn:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .menu-btn:active {
+      transform: translateY(-2px);
+    }
+
+    .menu-icon {
+      font-size: 3rem;
+    }
+
+    .menu-text {
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .menu-desc {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
+    /* Different colors for each button */
+    .btn-quran {
+      background: linear-gradient(145deg, #1e3c72 0%, #2a5298 100%);
+      box-shadow: 0 10px 20px rgba(30, 60, 114, 0.3);
+    }
+
+    .btn-namaz {
+      background: linear-gradient(145deg, #11998e 0%, #38ef7d 100%);
+      box-shadow: 0 10px 20px rgba(17, 153, 142, 0.3);
+    }
+
+    .btn-naat {
+      background: linear-gradient(145deg, #fc4a1a 0%, #f7b733 100%);
+      box-shadow: 0 10px 20px rgba(252, 74, 26, 0.3);
+    }
+
+    .btn-hadith {
+      background: linear-gradient(145deg, #834d9b 0%, #d04ed6 100%);
+      box-shadow: 0 10px 20px rgba(131, 77, 155, 0.3);
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 20px;
+    }
+
+    .footer-dua {
+      font-size: 1rem;
+      color: #1e3c72;
+      font-weight: 600;
+      margin-top: 10px;
+      font-family: 'Amiri', serif;
+    }
+
+    @media (max-width: 500px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .app-title {
+        font-size: 1.8rem;
+      }
+      
+      .menu-btn {
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-container">
+  <div class="app-logo">🌙</div>
+  <h1 class="app-title">اسلامی ایپ کولیکشن</h1>
+  <p class="app-subtitle">Quran • Namaz • Naats • Hadith - All in One</p>
+
+  <div class="menu-grid">
+    <!-- Quran Button -->
+    <a href="quran.html" class="menu-btn btn-quran">
+      <span class="menu-icon">📖</span>
+      <span class="menu-text">قرآن شریف</span>
+      <span class="menu-desc">تلاوت با اردو ترجمہ</span>
+    </a>
+
+    <!-- Namaz Button -->
+    <a href="namaz.html" class="menu-btn btn-namaz">
+      <span class="menu-icon">🕌</span>
+      <span class="menu-text">نماز</span>
+      <span class="menu-desc">نماز کا طریقہ</span>
+    </a>
+
+    <!-- Naats Button -->
+    <a href="naats.html" class="menu-btn btn-naat">
+      <span class="menu-icon">🌙</span>
+      <span class="menu-text">نعتیں</span>
+      <span class="menu-desc">100+ نعتیں</span>
+    </a>
+
+    <!-- Hadith Button -->
+    <a href="hadith.html" class="menu-btn btn-hadith">
+      <span class="menu-icon">📜</span>
+      <span class="menu-text">احادیث</span>
+      <span class="menu-desc">100+ احادیث</span>
+    </a>
+  </div>
+
+  <p class="footer-text">🤲 "خيركم من تعلم القرآن وعلمه"</p>
+  <p class="footer-dua">اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ</p>
+</div>
+
+</body>
+</html>

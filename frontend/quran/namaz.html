@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🌟 بچوں کی نماز گائیڈ | مکمل درود ابراہیمی + تشہد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #1b8c6e 0%, #0e5a46 100%);
+            font-family: 'Segoe UI', 'Comic Neue', 'Noto Nastaliq Urdu', 'Poppins', cursive, sans-serif;
+            padding: 15px;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 248, 225, 0.15);
+            backdrop-filter: blur(3px);
+            border-radius: 60px;
+            padding: 16px 18px 28px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+            border: 3px solid #ffdd99;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #FFF9C4, #FFE0A3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-weight: bold;
+            font-family: 'Comic Neue', 'Noto Nastaliq Urdu', cursive;
+        }
+
+        .sub {
+            font-size: 0.85rem;
+            background: #f5bc70cc;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 40px;
+            margin-top: 6px;
+            color: #1e3a2f;
+            font-weight: bold;
+        }
+
+        .prayer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .prayer-btn {
+            background: #f9b81b;
+            border: none;
+            border-radius: 100px;
+            padding: 12px 22px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d3e2b;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Comic Neue', 'Noto Nastaliq Urdu', cursive;
+            box-shadow: 0 8px 0 #b4621a;
+            transform: translateY(-2px);
+        }
+
+        .prayer-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #b4621a;
+        }
+
+        .prayer-btn.active {
+            background: #ffd966;
+            box-shadow: 0 4px 0 #b4621a;
+            transform: translateY(2px);
+            border: 2px solid white;
+        }
+
+        .kid-tabs {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mode-badge {
+            background: #fae67a;
+            padding: 8px 25px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #2c4b32;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Comic Neue', cursive;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .mode-badge.active {
+            background: #ffc107;
+            border: 2px solid white;
+            color: #1f3d2c;
+            transform: scale(0.98);
+        }
+
+        .guide-card {
+            background: #fffbf0;
+            border-radius: 50px;
+            padding: 20px;
+            margin: 15px 0 15px;
+            color: #2d3e2b;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+            direction: rtl;
+            border: 3px solid #ffcd7e;
+        }
+
+        .prayer-name-box {
+            background: #f0cf8b;
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 60px;
+            margin-bottom: 12px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #2b5a41;
+        }
+
+        .rakaat-kid {
+            background: #48a37b;
+            color: white;
+            border-radius: 30px;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-right: 12px;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 15px 0 12px;
+            background: #ffe2aa;
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 50px;
+            color: #795d34;
+        }
+
+        .step-list {
+            list-style: none;
+        }
+
+        .step-list li {
+            background: #fff4e2;
+            margin: 16px 0;
+            padding: 14px 18px;
+            border-radius: 35px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            border-right: 8px solid #f9b81b;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .step-num {
+            background: #f9b81b;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #2c4b32;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .arabic-bubble {
+            font-family: 'Amiri', 'Noto Nastaliq Urdu', monospace;
+            font-size: 1.1rem;
+            background: #ebd9b0;
+            padding: 8px 12px;
+            border-radius: 35px;
+            margin-top: 10px;
+            color: #a5581a;
+            direction: rtl;
+            text-align: center;
+        }
+
+        .dua-card {
+            background: #fbe6b0;
+            border-radius: 40px;
+            padding: 18px;
+            margin: 20px 0;
+            border: 3px solid #f7bc45;
+            box-shadow: 0 5px 0 #c28a3e;
+        }
+
+        .dua-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #b45f1b;
+            text-align: center;
+            margin-bottom: 12px;
+            font-family: 'Amiri', cursive;
+        }
+
+        .arabic-large {
+            font-size: 1.4rem;
+            font-family: 'Amiri', 'Noto Nastaliq Urdu', serif;
+            text-align: center;
+            line-height: 1.8;
+            color: #5a3a1a;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .urdu-trans {
+            background: #fff2df;
+            padding: 12px;
+            border-radius: 30px;
+            margin-top: 12px;
+            font-size: 1rem;
+            text-align: center;
+            color: #2d4b2d;
+        }
+
+        .transliteration {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.85rem;
+            text-align: center;
+            background: #e7dbbc;
+            padding: 8px;
+            border-radius: 25px;
+            margin-top: 8px;
+            color: #6b3e1a;
+            direction: ltr;
+        }
+
+        .fun-fact {
+            background: #cbe6da;
+            border-radius: 35px;
+            padding: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #195a41;
+        }
+
+        .surah-card-kid {
+            background: #ffefcf;
+            border-radius: 40px;
+            padding: 12px 16px;
+            margin: 18px 0;
+            border: 2px solid #ffbc6e;
+        }
+
+        .surah-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #b45f1b;
+            text-align: center;
+        }
+
+        .surah-text {
+            font-family: 'Amiri', cursive;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-align: center;
+            color: #2f6b4a;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        /* Audio Controls */
+        .audio-controls {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ffdd99;
+        }
+
+        .audio-btn {
+            background: #f9b81b;
+            color: #2d3e2b;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            font-family: 'Comic Neue', cursive;
+            box-shadow: 0 4px 0 #b4621a;
+        }
+
+        .audio-btn:hover { transform: scale(1.05); }
+        .audio-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #b4621a; }
+        .audio-btn.active { background: #48a37b; color: white; }
+
+        .speed-btn-namaz {
+            background: #2d8a5e;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: 'Comic Neue', cursive;
+        }
+
+        .speed-btn-namaz.active { background: #f9b81b; color: #2d3e2b; }
+
+        .play-dua-btn {
+            background: #48a37b;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .play-dua-btn:hover { transform: scale(1.05); background: #3a7a5c; }
+
+        @media (max-width: 550px) {
+            .prayer-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            .step-text {
+                font-size: 0.85rem;
+            }
+            .step-title {
+                font-size: 1.2rem;
+            }
+            .arabic-large {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <header>
+        <h1>🧸 بچوں کی نماز گائیڈ</h1>
+        <div class="sub">⭐ مکمل درود ابراہیمی + تشہد (شہادت) ⭐</div>
+    </header>
+
+    <div class="kid-tabs">
+        <div class="mode-badge active" data-mode="sunnah">🌟 سنت نماز</div>
+        <div class="mode-badge" data-mode="fard">🕌 فرض نماز</div>
+    </div>
+
+    <div class="prayer-grid">
+        <button class="prayer-btn" data-prayer="fajr">🌅 فجر</button>
+        <button class="prayer-btn" data-prayer="dhuhr">☀️ ظہر</button>
+        <button class="prayer-btn" data-prayer="asr">🍂 عصر</button>
+        <button class="prayer-btn" data-prayer="maghrib">🌙 مغرب</button>
+        <button class="prayer-btn" data-prayer="isha">✨ عشاء</button>
+    </div>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <span style="font-weight: 600; color: #fff9c4;">🔊 آواز:</span>
+        <button class="audio-btn" id="urduAudioBtn" onclick="toggleAudio()">🔊 اردو</button>
+        <button class="audio-btn" id="arabicAudioBtn" onclick="toggleArabicAudio()">🔊 عربی</button>
+        <span style="margin: 0 10px; color: #fff9c4;">|</span>
+        <span style="font-weight: 600; color: #fff9c4;">⚡ رفتار:</span>
+        <button class="speed-btn-namaz active" onclick="setSpeed('slow')">🐢 سست</button>
+        <button class="speed-btn-namaz" onclick="setSpeed('normal')">⚡ عام</button>
+        <button class="speed-btn-namaz" onclick="setSpeed('fast')">🚀 تیز</button>
+        <button class="audio-btn" id="stopBtn" onclick="stopAudio()" style="background: #e74c3c; color: white;">⏹️ روکیں</button>
+    </div>
+
+    <div id="guideContent" class="guide-card">
+        <div style="text-align:center; padding:30px;">🤗 پیارے بچے! نماز سیکھنے کے لیے کوئی بھی نماز منتخب کرو</div>
+    </div>
+
+    <footer>
+        🎈 مکمل درود ابراہیمی + تشہد | عربی، اردو اور آسان تلفظ کے ساتھ | والدین کے ساتھ مشق کریں
+    </footer>
+</div>
+
+<script>
+    // ======================= مکمل سورہ فاتحہ اور اخلاص =======================
+    const SURAH_FATIHA = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (1) الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ (2) الرَّحْمَٰنِ الرَّحِيمِ (3) مَالِكِ يَوْمِ الدِّينِ (4) إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ (5) اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ (6) صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ (7)";
+    const SURAH_IKHLAS = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (1) قُلْ هُوَ اللَّهُ أَحَدٌ (2) اللَّهُ الصَّمَدُ (3) لَمْ يَلِدْ وَلَمْ يُولَدْ (4) وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ (5)";
+
+    // ======================= کامل تشہد (شہادت) =======================
+    const TASHAHHUD_ARABIC = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ";
+    const TASHAHHUD_URDU = "تمام قولی، بدنی اور مالی عبادات اللہ کے لیے ہیں۔ اے نبی! آپ پر اللہ کی رحمت اور برکتیں ہوں۔ ہم پر اور اللہ کے نیک بندوں پر سلام ہو۔ میں گواہی دیتا ہوں کہ اللہ کے سوا کوئی معبود نہیں اور میں گواہی دیتا ہوں کہ محمد ﷺ اللہ کے بندے اور اس کے رسول ہیں۔";
+    const TASHAHHUD_TRANS = "At-tahiyyatu lillahi was-salawatu wat-tayyibat, as-salamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuh, as-salamu 'alayna wa 'ala 'ibadillahis-salihin. Ashhadu alla ilaha illallah wa ashhadu anna Muhammadan 'abduhu wa rasuluh.";
+
+    // ======================= مکمل درود ابراہیمی (Durood-e-Ibrahim) =======================
+    const DUROOD_IBRAHIM_ARABIC = "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ";
+    const DUROOD_IBRAHIM_URDU = "اے اللہ! رحمت فرما محمد ﷺ پر اور آل محمد ﷺ پر، جیسا کہ تو نے رحمت فرمائی ابراہیم علیہ السلام پر اور آل ابراہیم پر۔ بے شک تو قابل تعریف اور بزرگی والا ہے۔ اے اللہ! برکت نازل فرما محمد ﷺ پر اور آل محمد ﷺ پر، جیسا کہ تو نے برکت نازل فرمائی ابراہیم علیہ السلام پر اور آل ابراہیم پر۔ بے شک تو تعریف کے لائق اور بزرگی والا ہے۔";
+    const DUROOD_IBRAHIM_TRANS = "Allahumma salli 'ala Muhammadin wa 'ala ali Muhammadin, kama sallayta 'ala Ibrahima wa 'ala ali Ibrahima, innaka Hamidum Majeed. Allahumma barik 'ala Muhammadin wa 'ala ali Muhammadin, kama barakta 'ala Ibrahima wa 'ala ali Ibrahima, innaka Hamidum Majeed.";
+
+    // بچوں کے لیے آسان اقدامات (سنت)
+    function getSunnahSteps(prayerName, rakatCount) {
+        let steps = [
+            { text: "🧼 1. وضو کرلو (ہاتھ، منہ، پاؤں دھو لو) اور صاف کپڑے پہن لو۔", arabic: "" },
+            { text: "🤲 2. قبلہ رخ کھڑے ہو جاؤ اور دل میں نیت کرو: 'میں اللہ کے لیے "+rakatCount+" رکعت سنت پڑھ رہا ہوں'۔", arabic: "نَوَيْتُ سُنَّةَ اللَّهِ" },
+            { text: "🙌 3. کانوں تک ہاتھ اٹھا کر 'اللہُ اکبر' کہو (نماز شروع ہوگئی)۔", arabic: "الله أكبر" },
+            { text: "📖 4. ناف کے نیچے ہاتھ باندھو اور ثناء پڑھو: 'سبحانک اللهم وبحمدک...'", arabic: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ" },
+            { text: "🍃 5. 'أَعُوذُ بِاللَّهِ' اور 'بِسْمِ اللَّهِ' کہو، پھر مکمل سورہ فاتحہ پڑھو۔", arabic: SURAH_FATIHA },
+            { text: "🌟 6. سورہ فاتحہ کے بعد سورہ اخلاص پڑھو (اللہ ایک ہے)۔", arabic: SURAH_IKHLAS },
+            { text: "🧎 7. رکوع میں جاؤ: 'اللہ اکبر' کہہ کر تین بار 'سبحان ربی العظیم' کہو۔", arabic: "سُبْحَانَ رَبِّيَ الْعَظِيمِ" },
+            { text: "🚶 8. رکوع سے اٹھو: 'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ' پھر 'رَبَّنَا لَكَ الْحَمْدُ'۔", arabic: "رَبَّنَا لَكَ الْحَمْدُ" },
+            { text: "💎 9. سجدہ میں جاؤ: ماتھا زمین پر رکھو، تین بار 'سبحان ربي الأعلى' کہو۔", arabic: "سُبْحَانَ رَبِّيَ الْأَعْلَى" },
+            { text: "🙏 10. سجدوں کے بیچ بیٹھ کر 'رَبِّ اغْفِرْ لِي' کہو۔", arabic: "رَبِّ اغْفِرْ لِي" },
+            { text: "🔄 11. دوسرا سجدہ کرو، پھر دوسری رکعت کے لیے کھڑے ہو جاؤ۔", arabic: "" }
+        ];
+        if (rakatCount === 2) {
+            steps.push({ text: "📿 12. دوسری رکعت میں فاتحہ + اخلاص پڑھو، رکوع، سجدے کرو۔ پھر تشہد (التحیات) کے لیے بیٹھو۔", arabic: "" });
+            steps.push({ text: "🕌 13. مکمل تشہد پڑھو (اللہ کی وحدانیت اور رسالت کی گواہی)۔", arabic: TASHAHHUD_ARABIC });
+            steps.push({ text: "🤲 14. مکمل درود ابراہیمی (Durood-e-Ibrahim) پڑھو - یہ درود ہمارے نبی ﷺ پر بھیجو۔", arabic: DUROOD_IBRAHIM_ARABIC });
+            steps.push({ text: "🕊️ 15. دعا کے بعد دائیں اور بائیں 'السلام علیکم' کہہ کر نماز ختم کرو۔", arabic: "السَّلَامُ عَلَيْكُمْ" });
+        } else if (rakatCount === 4) {
+            steps.push({ text: "📿 12. دوسری رکعت کے بعد پہلا تشہد (التحیات) پڑھو اور تیسری رکعت کھڑے ہو جاؤ۔", arabic: "التَّحِيَّاتُ لِلَّهِ" });
+            steps.push({ text: "🍃 13. تیسری رکعت: صرف سورہ فاتحہ، چوتھی رکعت: صرف فاتحہ، رکوع، سجدے کرو۔", arabic: SURAH_FATIHA });
+            steps.push({ text: "🌟 14. آخری قعدہ میں مکمل تشہد پڑھو (پوری شہادت)۔", arabic: TASHAHHUD_ARABIC });
+            steps.push({ text: "🤲 15. پھر مکمل درود ابراہیمی پڑھو اور مسنون دعا کے بعد سلام پھیرو۔", arabic: DUROOD_IBRAHIM_ARABIC });
+            steps.push({ text: "🕊️ 16. دائیں بائیں سلام کرکے نماز مکمل کرو۔", arabic: "السَّلَامُ عَلَيْكُمْ" });
+        }
+        steps.push({ text: "🎉 یاد رکھو: درود ابراہیمی پڑھنے سے اللہ ہم پر رحمت بھیجتا ہے اور فرشتے دعا کرتے ہیں۔", arabic: "" });
+        return steps;
+    }
+
+    // فرض نماز کے آسان اقدامات (درود ابراہیمی سمیت)
+    function getFardSteps(prayerId) {
+        let steps = [];
+        if (prayerId === "fajr") {
+            steps = [
+                { text: "🌅 فجر کی 2 رکعت فرض کی نیت کرو۔", arabic: "نَوَيْتُ فَرْضَ الْفَجْرِ" },
+                { text: "تکبیر، ثناء، تعوذ، بسم اللہ، سورہ فاتحہ + اخلاص (پہلی رکعت)۔", arabic: SURAH_FATIHA },
+                { text: "رکوع، سجدے، دوسری رکعت میں فاتحہ + اخلاص پڑھو۔", arabic: SURAH_IKHLAS },
+                { text: "آخری قعدہ میں مکمل تشہد (شہادت) پڑھو۔", arabic: TASHAHHUD_ARABIC },
+                { text: "مکمل درود ابراہیمی پڑھو۔", arabic: DUROOD_IBRAHIM_ARABIC },
+                { text: "دعا کے بعد سلام پھیرو۔", arabic: "السَّلَامُ عَلَيْكُمْ" }
+            ];
+        } else if (prayerId === "maghrib") {
+            steps = [
+                { text: "🌙 مغرب کی 3 رکعت فرض کی نیت کرو۔ پہلی رکعت: فاتحہ + اخلاص۔", arabic: SURAH_FATIHA },
+                { text: "دوسری رکعت: فاتحہ + اخلاص، پھر پہلا تشہد (التحیات)۔", arabic: "التَّحِيَّاتُ لِلَّهِ" },
+                { text: "تیسری رکعت: صرف سورہ فاتحہ، پھر رکوع، سجدے۔", arabic: SURAH_FATIHA },
+                { text: "آخری قعدہ میں مکمل تشہد پڑھو۔", arabic: TASHAHHUD_ARABIC },
+                { text: "درود ابراہیمی پڑھو اور پھر سلام پھیرو۔", arabic: DUROOD_IBRAHIM_ARABIC }
+            ];
+        } else { // 4 رکعات (ظہر، عصر، عشاء)
+            steps = [
+                { text: "🕌 4 رکعت فرض کی نیت کرو۔ پہلی رکعت: فاتحہ + اخلاص۔", arabic: SURAH_FATIHA },
+                { text: "دوسری رکعت: فاتحہ + اخلاص، پہلا تشہد پڑھ کر تیسری رکعت کھڑے ہو۔", arabic: "التَّحِيَّاتُ" },
+                { text: "تیسری رکعت: صرف فاتحہ، چوتھی رکعت: صرف فاتحہ، رکوع و سجدے۔", arabic: SURAH_FATIHA },
+                { text: "آخری قعدہ میں مکمل تشہد (شہادت) پڑھو۔", arabic: TASHAHHUD_ARABIC },
+                { text: "مکمل درود ابراہیمی پڑھو۔", arabic: DUROOD_IBRAHIM_ARABIC },
+                { text: "دونوں طرف سلام کرکے نماز ختم کرو۔", arabic: "السَّلَامُ عَلَيْكُمْ" }
+            ];
+        }
+        steps.push({ text: "⭐ فرض نماز میں تشہد کے بعد درود ابراہیمی پڑھنا واجب ہے۔ یہ ہمارے نبی ﷺ سے محبت کا اظہار ہے۔", arabic: "" });
+        return steps;
+    }
+
+    const sunnahRakatMap = {
+        fajr: "2 رکعت سنت", dhuhr: "4 رکعت سنت", asr: "4 رکعت سنت", maghrib: "2 رکعت سنت", isha: "2 رکعت سنت"
+    };
+    
+    let currentMode = "sunnah";
+    let currentPrayer = "fajr";
+
+    function getPrayerNiceName(p) {
+        const map = { fajr:"فجر", dhuhr:"ظہر", asr:"عصر", maghrib:"مغرب", isha:"عشاء" };
+        return map[p];
+    }
+
+    // درود ابراہیمی کا خوبصورت کارڈ
+    function getDuroodCard() {
+        return `
+            <div class="dua-card">
+                <div class="dua-title">🌹 مکمل درود ابراہیمی (Durood-e-Ibrahim) 🌹</div>
+                <div class="arabic-large">${DUROOD_IBRAHIM_ARABIC}</div>
+                <button class="play-dua-btn" onclick="playDua('${DUROOD_IBRAHIM_ARABIC.replace(/'/g, "\\'")}', 'ar-SA')">🔊 عربی میں سنیں</button>
+                <button class="play-dua-btn" onclick="playDua('${DUROOD_IBRAHIM_URDU.replace(/'/g, "\\'")}', 'ur-PK')">🔊 اردو میں سنیں</button>
+                <div class="urdu-trans"><strong>📖 اردو ترجمہ:</strong> ${DUROOD_IBRAHIM_URDU}</div>
+                <div class="transliteration"><strong>🔊 آسان تلفظ (Transliteration):</strong><br>${DUROOD_IBRAHIM_TRANS}</div>
+                <div style="margin-top:12px; font-size:0.85rem; text-align:center;">✨ بچے! یہ درود ہم نبی کریم ﷺ پر بھیجتے ہیں، جیسے اللہ نے حضرت ابراہیم علیہ السلام پر رحمت بھیجی۔ اس سے اللہ ہماری مغفرت فرماتا ہے۔ ✨</div>
+            </div>
+        `;
+    }
+
+    function getShahadatCard() {
+        return `
+            <div class="dua-card">
+                <div class="dua-title">🕌 مکمل تشہد (التحیات) - شہادت 🕌</div>
+                <div class="arabic-large">${TASHAHHUD_ARABIC}</div>
+                <button class="play-dua-btn" onclick="playDua('${TASHAHHUD_ARABIC.replace(/'/g, "\\'")}', 'ar-SA')">🔊 عربی میں سنیں</button>
+                <button class="play-dua-btn" onclick="playDua('${TASHAHHUD_URDU.replace(/'/g, "\\'")}', 'ur-PK')">🔊 اردو میں سنیں</button>
+                <div class="urdu-trans"><strong>📖 اردو معنی:</strong> ${TASHAHHUD_URDU}</div>
+                <div class="transliteration"><strong>🔊 آسان تلفظ:</strong><br>${TASHAHHUD_TRANS}</div>
+                <div style="margin-top:12px; font-size:0.85rem; text-align:center;">✨ ہر نماز میں تشہد کے بعد درود ابراہیمی ضرور پڑھیں ✨</div>
+            </div>
+        `;
+    }
+
+    function renderGuide() {
+        const isSunnah = (currentMode === "sunnah");
+        let stepsArray = [];
+        let rakatDesc = "";
+        let prayerUrdu = getPrayerNiceName(currentPrayer);
+        let specialTitle = "";
+
+        if (isSunnah) {
+            let count = 2;
+            if (currentPrayer === "dhuhr" || currentPrayer === "asr") count = 4;
+            else if (currentPrayer === "maghrib" || currentPrayer === "isha" || currentPrayer === "fajr") count = 2;
+            stepsArray = getSunnahSteps(currentPrayer, count);
+            rakatDesc = sunnahRakatMap[currentPrayer];
+            specialTitle = `✨ سنت نماز سیکھیں (نبی ﷺ کا طریقہ) ✨`;
+        } else {
+            stepsArray = getFardSteps(currentPrayer);
+            let fardCount = (currentPrayer === "fajr") ? "2 رکعت فرض" : ((currentPrayer === "maghrib") ? "3 رکعت فرض" : "4 رکعت فرض");
+            rakatDesc = fardCount;
+            specialTitle = `🕌 فرض نماز کا آسان طریقہ (اللہ کا حکم) 🕌`;
+        }
+
+        const stepsHtml = stepsArray.map((step, idx) => `
+            <li>
+                <div class="step-num">${idx+1}</div>
+                <div class="step-text">
+                    ${step.text}
+                    ${step.arabic ? `<div class="arabic-bubble">📖 ${step.arabic}</div>` : ''}
+                </div>
+            </li>
+        `).join('');
+
+        const surahBox = `
+            <div class="surah-card-kid">
+                <div class="surah-title">🌟 سورہ فاتحہ (ہر رکعت میں ضروری) 🌟</div>
+                <div class="surah-text">${SURAH_FATIHA}</div>
+                <button class="play-dua-btn" onclick="playDua('${SURAH_FATIHA.replace(/'/g, "\\'")}', 'ar-SA')">🔊 سورہ فاتحہ سنیں</button>
+            </div>
+            <div class="surah-card-kid">
+                <div class="surah-title">💛 سورہ اخلاص (اللہ ایک ہے) 💛</div>
+                <div class="surah-text">${SURAH_IKHLAS}</div>
+                <button class="play-dua-btn" onclick="playDua('${SURAH_IKHLAS.replace(/'/g, "\\'")}', 'ar-SA')">🔊 سورہ اخلاص سنیں</button>
+            </div>
+        `;
+
+        const fullHtml = `
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap:wrap;">
+                <div>
+                    <span class="prayer-name-box">⭐ ${prayerUrdu} نماز ⭐</span>
+                    <span class="rakaat-kid">${rakatDesc}</span>
+                </div>
+            </div>
+            <div class="step-title">📖 ${specialTitle}</div>
+            <ul class="step-list">
+                ${stepsHtml}
+            </ul>
+            ${getShahadatCard()}
+            ${getDuroodCard()}
+            ${surahBox}
+            <div class="fun-fact">
+                🧸🎈 پیارے بچے! جب تم درود ابراہیمی پڑھتے ہو تو اللہ تم پر دس رحمتیں نازل فرماتا ہے۔ نبی کریم ﷺ نے فرمایا: جو مجھ پر ایک بار درود بھیجے اللہ اس پر دس رحمتیں بھیجتا ہے۔
+                <br> 🤲 "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ" 🤲
+            </div>
+        `;
+
+        document.getElementById("guideContent").innerHTML = fullHtml;
+
+        // active classes
+        document.querySelectorAll('.prayer-btn').forEach(btn => {
+            if (btn.dataset.prayer === currentPrayer) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        document.querySelectorAll('.mode-badge').forEach(tab => {
+            if (tab.dataset.mode === currentMode) tab.classList.add('active');
+            else tab.classList.remove('active');
+        });
+    }
+
+    // Event Listeners
+    document.querySelectorAll('.mode-badge').forEach(badge => {
+        badge.addEventListener('click', (e) => {
+            const mode = e.currentTarget.dataset.mode;
+            if (mode === "sunnah" || mode === "fard") {
+                currentMode = mode;
+                renderGuide();
+            }
+        });
+    });
+
+    document.querySelectorAll('.prayer-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const prayer = e.currentTarget.dataset.prayer;
+            if (prayer) {
+                currentPrayer = prayer;
+                renderGuide();
+            }
+        });
+    });
+
+    renderGuide();
+
+    // ======================= AUDIO / VOICE FUNCTIONALITY =======================
+    let urduAudioEnabled = false;
+    let arabicAudioEnabled = false;
+    let currentSpeed = 'slow';
+    let currentUtterance = null;
+    let isPlaying = false;
+
+    const speedRates = { slow: 0.7, normal: 1.0, fast: 1.3 };
+
+    // Toggle Urdu Audio
+    function toggleAudio() {
+        urduAudioEnabled = !urduAudioEnabled;
+        document.getElementById('urduAudioBtn').classList.toggle('active', urduAudioEnabled);
+        if (!urduAudioEnabled && window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+            isPlaying = false;
+        }
+    }
+
+    // Toggle Arabic Audio
+    function toggleArabicAudio() {
+        arabicAudioEnabled = !arabicAudioEnabled;
+        document.getElementById('arabicAudioBtn').classList.toggle('active', arabicAudioEnabled);
+        if (!arabicAudioEnabled && window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+            isPlaying = false;
+        }
+    }
+
+    // Set Speed
+    function setSpeed(speed) {
+        currentSpeed = speed;
+        document.querySelectorAll('.speed-btn-namaz').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // Stop Audio
+    function stopAudio() {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        isPlaying = false;
+    }
+
+    // Play Dua Text
+    function playDua(text, lang) {
+        if (!window.speechSynthesis) {
+            alert('آواز کی سہولت آپ کے براؤزر میں دستیاب نہیں');
+            return;
+        }
+
+        stopAudio();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = speedRates[currentSpeed];
+        utterance.pitch = 1.0;
+        utterance.lang = lang;
+
+        // Try to find appropriate voice
+        const voices = window.speechSynthesis.getVoices();
+        const voice = voices.find(v => v.lang.includes(lang === 'ur-PK' ? 'ur' : 'ar'));
+        if (voice) utterance.voice = voice;
+
+        utterance.onend = () => { isPlaying = false; };
+        utterance.onerror = () => { isPlaying = false; };
+
+        currentUtterance = utterance;
+        isPlaying = true;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // Preload voices
+    if (window.speechSynthesis) {
+        window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+</script>
+</body>
+</html>

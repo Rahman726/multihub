@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>تلاوت القرآن - Quran with Urdu & English Translations</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="quran-app">
+  <div class="app-header">
+    <h1>📖 القُرْآنُ الكَرِيمُ <span>🎧</span></h1>
+    <p>Read • Listen • Search • Bookmark | اردو & English Translations</p>
+  </div>
+
+  <div class="controls-row">
+    <div class="surah-selector">
+      <select id="surahSelect"></select>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Urdu / English / Arabic search" dir="auto">
+      <button id="searchBtn" class="search-btn">🔍</button>
+      <button id="clearSearchBtn" class="clear-search">✖</button>
+    </div>
+    <div class="view-options">
+      <button class="view-btn active" data-view="arabic">📖 Arabic + ترجمہ</button>
+      <button class="view-btn" data-view="transliteration">🔤 Transliteration</button>
+    </div>
+    <div class="lang-toggle">
+      <button id="urduBtn" class="lang-btn active">🇵🇰 اردو</button>
+      <button id="englishBtn" class="lang-btn">🇬🇧 English</button>
+    </div>
+    <div class="speed-toggle">
+      <button id="speedSlowBtn" class="speed-btn">🐢 Slow</button>
+      <button id="speedNormalBtn" class="speed-btn active">⚡ Normal</button>
+      <button id="speedFastBtn" class="speed-btn">🚀 Fast</button>
+    </div>
+    <div class="urdu-audio-toggle">
+      <button id="urduAudioBtn" class="action-btn">🔊 اردو ترجمہ</button>
+    </div>
+    <div class="continuous-toggle">
+      <button id="continuousBtn" class="action-btn">🔁 Continuous</button>
+    </div>
+    <div class="manzil-toggle">
+      <button id="manzilBtn" class="action-btn">🤲 منزل</button>
+    </div>
+    <div class="surah-toggle">
+      <button id="surahListBtn" class="action-btn">📖 سورتیں</button>
+    </div>
+    <div class="namaz-nav">
+      <button id="namazToggleBtn" class="action-btn" onclick="toggleNamaz()">🕌 نماز</button>
+    </div>
+    <div class="hadith-nav">
+      <a href="hadith.html" class="action-btn" style="text-decoration: none;">📜 حدیث</a>
+    </div>
+    <div class="naat-nav">
+      <a href="naats.html" class="action-btn" style="text-decoration: none;">🌙 نعتیں</a>
+    </div>
+    <div class="dark-toggle">
+      <button id="darkModeBtn" class="action-btn">🌙 Dark Mode</button>
+    </div>
+  </div>
+
+  <div class="bookmark-bar">
+    <div class="bookmark-info">
+      <span>📌 Bookmark:</span>
+      <button id="saveBookmarkBtn" class="btn-bookmark">💾 Save Current Position</button>
+    </div>
+    <div>
+      <button id="gotoBookmarkBtn" class="goto-bookmark">📍 Go to Bookmark</button>
+      <span id="bookmarkStatus" style="margin-right: 10px; font-size:0.8rem;"></span>
+    </div>
+  </div>
+
+  <div id="quranContent" class="quran-content">Loading...</div>
+  <div id="duaContainer"></div>
+  <div id="manzilContainer"></div>
+
+  <!-- Namaz Section -->
+  <div id="namazSection" style="display: none; margin-top: 20px;">
+    <div style="background: linear-gradient(145deg, #1b8c6e 0%, #0e5a46 100%); border-radius: 30px; padding: 20px; color: white; max-width: 800px; margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h2 style="font-size: 1.8rem; background: linear-gradient(135deg, #FFF9C4, #FFE0A3); -webkit-background-clip: text; background-clip: text; color: transparent;">🕌 بچوں کی نماز گائیڈ</h2>
+        <div style="font-size: 0.9rem; background: #f5bc70cc; display: inline-block; padding: 5px 15px; border-radius: 40px; color: #1e3a2f; font-weight: bold;">مکمل درود ابراہیمی + تشہد</div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
+        <button onclick="showNamaz('fajr')" style="background: #f9b81b; border: none; border-radius: 100px; padding: 10px 20px; font-size: 1rem; font-weight: bold; color: #2d3e2b; cursor: pointer; box-shadow: 0 6px 0 #b4621a;">🌅 فجر</button>
+        <button onclick="showNamaz('dhuhr')" style="background: #f9b81b; border: none; border-radius: 100px; padding: 10px 20px; font-size: 1rem; font-weight: bold; color: #2d3e2b; cursor: pointer; box-shadow: 0 6px 0 #b4621a;">☀️ ظہر</button>
+        <button onclick="showNamaz('asr')" style="background: #f9b81b; border: none; border-radius: 100px; padding: 10px 20px; font-size: 1rem; font-weight: bold; color: #2d3e2b; cursor: pointer; box-shadow: 0 6px 0 #b4621a;">🍂 عصر</button>
+        <button onclick="showNamaz('maghrib')" style="background: #f9b81b; border: none; border-radius: 100px; padding: 10px 20px; font-size: 1rem; font-weight: bold; color: #2d3e2b; cursor: pointer; box-shadow: 0 6px 0 #b4621a;">🌙 مغرب</button>
+        <button onclick="showNamaz('isha')" style="background: #f9b81b; border: none; border-radius: 100px; padding: 10px 20px; font-size: 1rem; font-weight: bold; color: #2d3e2b; cursor: pointer; box-shadow: 0 6px 0 #b4621a;">✨ عشاء</button>
+      </div>
+
+      <div id="namazContent" style="background: #fffbf0; border-radius: 30px; padding: 20px; color: #2d3e2b; direction: rtl;">
+        <div style="text-align: center; padding: 30px;">🤗 پیارے بچے! نماز سیکھنے کے لیے کوئی بھی نماز منتخب کرو</div>
+      </div>
+
+      <div style="text-align: center; margin-top: 15px; font-size: 0.8rem; opacity: 0.9;">
+        🎈 مکمل درود ابراہیمی + تشہد | عربی، اردو اور آسان تلفظ کے ساتھ
+      </div>
+    </div>
+  </div>
+  
+  <!-- Surah List Modal -->
+  <div id="surahModal" class="surah-modal">
+    <div class="surah-modal-content">
+      <div class="surah-modal-header">
+        <h2>📖 تمام سورتیں (All Surahs)</h2>
+        <button id="closeSurahModal" class="btn-close-modal">✕</button>
+      </div>
+      <div id="surahListContainer" class="surah-list">
+        <!-- Surah list will be populated here -->
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-note">🤲 "And We have certainly made the Quran easy for remembrance." — Urdu (Fateh Muhammad Jalandhari) & English (Muhammad Asad)</div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  // Namaz Toggle
+  function toggleNamaz() {
+    const namazSection = document.getElementById('namazSection');
+    const quranContent = document.getElementById('quranContent');
+    const btn = document.getElementById('namazToggleBtn');
+    
+    if (namazSection.style.display === 'none') {
+      namazSection.style.display = 'block';
+      quranContent.style.display = 'none';
+      btn.classList.add('active');
+    } else {
+      namazSection.style.display = 'none';
+      quranContent.style.display = 'block';
+      btn.classList.remove('active');
+    }
+  }
+
+  // Show Namaz Content
+  function showNamaz(prayer) {
+    const namazContent = document.getElementById('namazContent');
+    const prayers = {
+      fajr: '🌅 فجر نماز (2 رکعت)',
+      dhuhr: '☀️ ظہر نماز (4 رکعت)',
+      asr: '🍂 عصر نماز (4 رکعت)',
+      maghrib: '🌙 مغرب نماز (3 رکعت)',
+      isha: '✨ عشاء نماز (4 رکعت)'
+    };
+    
+    const steps = [
+      '🧼 وضو کرلو (ہاتھ، منہ، پاؤں دھو لو)',
+      '🤲 قبلہ رخ کھڑے ہو جاؤ اور نیت کرو',
+      '🙌 اللہ اکبر کہہ کر نماز شروع کرو',
+      '📖 سورہ فاتحہ پڑھو',
+      '🌟 سورہ اخلاص پڑھو',
+      '🧎 رکوع اور سجدے کرو',
+      '📿 تشہد پڑھو',
+      '🤲 درود ابراہیمی پڑھو',
+      '🕊️ دونوں طرف سلام پھیرو'
+    ];
+    
+    const stepsHtml = steps.map((step, idx) => 
+      `<div style="background: #fff4e2; margin: 10px 0; padding: 15px; border-radius: 20px; border-right: 5px solid #f9b81b;">
+        <strong>مرحلہ ${idx + 1}:</strong> ${step}
+       </div>`
+    ).join('');
+    
+    namazContent.innerHTML = `
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h3 style="font-size: 1.5rem; color: #2b5a41; margin-bottom: 10px;">${prayers[prayer]}</h3>
+      </div>
+      ${stepsHtml}
+      <div style="background: #fbe6b0; border-radius: 20px; padding: 15px; margin-top: 15px; border: 2px solid #f7bc45;">
+        <div style="font-weight: bold; color: #b45f1b; text-align: center; margin-bottom: 10px;">🌹 درود ابراہیمی 🌹</div>
+        <div style="font-family: 'Amiri', serif; font-size: 1.2rem; text-align: center; color: #5a3a1a; line-height: 1.8;">
+          اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ
+        </div>
+      </div>
+    `;
+  }
+</script>
+</body>
+</html>
