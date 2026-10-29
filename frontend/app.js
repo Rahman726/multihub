@@ -144,7 +144,7 @@ if (el("choose-quran-btn")) {
 }
 if (el("choose-photo-btn")) {
   el("choose-photo-btn").addEventListener("click", () => {
-    window.location.href = '../photo store/index.html';
+    window.location.href = '/photo-store/';
   });
 }
 

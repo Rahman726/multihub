@@ -321,6 +321,10 @@ def results(quiz_id: str, authorization: str | None = Header(default=None)):
 
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
 
+# Photo Store — separate mount so it can be served on its own route
+PHOTO_STORE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "photo store")
+app.mount("/photo-store", StaticFiles(directory=PHOTO_STORE_DIR), name="photo_store")
+
 
 if __name__ == "__main__":
     uvicorn.run(

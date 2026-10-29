@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Store - Unlimited Photos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">📸 Photo Store</h1>
+            <p class="subtitle">Unlimited Photos to Browse &amp; Discover</p>
+        </div>
+    </header>
+
+    <div class="controls">
+        <div class="container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search photos by keyword..." autocomplete="off">
+                <button id="searchBtn" class="btn">Search</button>
+                <button id="randomBtn" class="btn btn-secondary">Random Photos</button>
+            </div>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="nature">Nature</button>
+                <button class="filter-btn" data-category="city">City</button>
+                <button class="filter-btn" data-category="technologya">Technologya</button>
+                <button class="filter-btn" data-category="people">People</button>
+                <button class="filter-btn" data-category="animals">Animals</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <div id="photoGrid" class="photo-grid"></div>
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Loading photos...</p>
+            </div>
+            <div class="load-more-container">
+                <button id="loadMoreBtn" class="btn btn-large">Load More Photos</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="lightbox" class="lightbox hidden">
+        <div class="lightbox-content">
+            <button id="closeLightbox" class="lightbox-close">&times;</button>
+            <img id="lightboxImg" src="" alt="Photo">
+            <div class="lightbox-info">
+                <p id="lightboxTitle"></p>
+            </div>
+            <button id="prevPhoto" class="lightbox-nav lightbox-prev">❮</button>
+            <button id="nextPhoto" class="lightbox-nav lightbox-next">❯</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Photo Store. Browse unlimited photos.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
