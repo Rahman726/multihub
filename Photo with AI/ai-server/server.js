@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 9001;
 
 // Middleware
 app.use(cors());
@@ -97,15 +97,6 @@ app.post('/api/chat', async (req, res) => {
         console.error('Chat proxy error:', error);
         res.status(500).json({ error: 'Chat service unavailable' });
     }
-});
-
-// ===================== SPA FALLBACK =====================
-
-app.get('*', (req, res) => {
-    if (req.url.startsWith('/api/')) {
-        return res.status(404).json({ error: 'API endpoint not found' });
-    }
-    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // ===================== EXPORT =====================
