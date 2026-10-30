@@ -1,0 +1,26 @@
+{
+  "name": "photo-ai",
+  "version": "2.0.0",
+  "description": "PhotoStore — AI Images & Gallery with Pollinations AI",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "production": "NODE_ENV=production node server.js"
+  },
+  "keywords": [
+    "photoai",
+    "backend",
+    "api",
+    "ai"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.2"
+  }
+}
