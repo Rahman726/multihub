@@ -142,9 +142,24 @@ if (el("choose-quran-btn")) {
     window.location.href = 'quran/index.html';
   });
 }
+if (el("choose-quiz-btn")) {
+  el("choose-quiz-btn").addEventListener("click", () => {
+    show("subjects");
+  });
+}
+if (el("choose-quran-btn")) {
+  el("choose-quran-btn").addEventListener("click", () => {
+    window.location.href = 'quran/index.html';
+  });
+}
 if (el("choose-photo-btn")) {
   el("choose-photo-btn").addEventListener("click", () => {
     window.location.href = '/photo-store/';
+  });
+}
+if (el("choose-chat-btn")) {
+  el("choose-chat-btn").addEventListener("click", () => {
+    window.location.href = '/api/chat';
   });
 }
 
