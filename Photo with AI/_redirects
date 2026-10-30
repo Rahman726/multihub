@@ -1,0 +1,5 @@
+# API routes go to serverless function
+/api/*  /.netlify/functions/api/:splat  200
+
+# SPA fallback — serve index.html for all non-file routes
+/*  /index.html  200

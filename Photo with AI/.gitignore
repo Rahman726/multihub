@@ -1,0 +1,15 @@
+node_modules/
+.env
+uploads/*
+!uploads/.gitkeep
+data/
+logs/
+*.log
+.DS_Store
+Thumbs.db
+nul
+
+# Dead files from removed features
+js/darkroom.js
+js/videos.js
+

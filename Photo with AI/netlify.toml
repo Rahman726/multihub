@@ -1,0 +1,14 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+  environment = { MONGODB_URI = "$MONGODB_URI", JWT_SECRET = "$JWT_SECRET", DEEPSEEK_API_KEY = "$DEEPSEEK_API_KEY", GOOGLE_CLIENT_ID = "$GOOGLE_CLIENT_ID" }
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# IMPORTANT: Set these env variables in Netlify Dashboard > Site settings > Environment variables
+# - MONGODB_URI: Your MongoDB Atlas connection string
+# - JWT_SECRET: Any random secret string for JWT tokens
+# - DEEPSEEK_API_KEY: (optional) For AI chat feature
