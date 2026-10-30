@@ -1,4 +1,4 @@
-const API = ""; // same origin (served by the Python backend)
+const API = ""; // Use same origin (proxied through hub)
 
 const el = (id) => document.getElementById(id);
 const screens = {
@@ -147,21 +147,6 @@ if (el("choose-quiz-btn")) {
     show("subjects");
   });
 }
-if (el("choose-quran-btn")) {
-  el("choose-quran-btn").addEventListener("click", () => {
-    window.location.href = 'quran/index.html';
-  });
-}
-if (el("choose-photo-btn")) {
-  el("choose-photo-btn").addEventListener("click", () => {
-    window.location.href = '/photo-store/';
-  });
-}
-if (el("choose-chat-btn")) {
-  el("choose-chat-btn").addEventListener("click", () => {
-    window.location.href = '/api/chat';
-  });
-}
 
 refreshLeaderboard();
 
@@ -244,6 +229,15 @@ el("signup-form").addEventListener("submit", (e) => {
   e.preventDefault();
   submitAuth("signup");
 });
+
+// Check if coming from Hub with token
+const hubToken = sessionStorage.getItem('hubToken');
+if (hubToken) {
+  setToken(hubToken);
+  sessionStorage.removeItem('hubToken');
+  // Skip auth screen and go to app selection
+  afterLogin('User');
+}
 
 el("sound-btn").textContent = AudioFX.muted() ? "🔇" : "🔊";
 el("sound-btn").addEventListener("click", () => {

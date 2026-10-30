@@ -1,3 +1,4 @@
+
 // ===================== DOM =====================
 const favToggle = document.getElementById('favToggle');
 const favSidebar = document.getElementById('favSidebar');

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>PhotoStore — AI Images & Gallery</title>
+    <meta name="description" content="Create AI images, explore beautiful photos, save favorites. Works offline on any device!">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin-dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2305a081'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='white'%3E📸%3C/text%3E%3C/svg%3E" sizes="any">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='32' fill='%2305a081'/%3E%3Ctext x='96' y='130' font-size='100' text-anchor='middle' fill='white'%3E📸%3C/text%3E%3C/svg%3E">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PhotoStore">
+    <meta name="application-name" content="PhotoStore">
+    <meta name="msapplication-TileColor" content="#05a081">
+    <meta name="msapplication-TileImage" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 144 144'%3E%3Crect width='144' height='144' rx='24' fill='%2305a081'/%3E%3Ctext x='72' y='100' font-size='72' text-anchor='middle' fill='white'%3E📸%3C/text%3E%3C/svg%3E">
+    <meta name="msapplication-config" content="none">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="PhotoStore - AI Images & Gallery">
+    <meta property="og:description" content="Create AI images, explore beautiful photos, save favorites. Works offline!">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='64' fill='%2305a081'/%3E%3Ctext x='256' y='340' font-size='200' text-anchor='middle' fill='white'%3E📸%3C/text%3E%3C/svg%3E">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PhotoStore - AI Images & Gallery">
+    <meta name="twitter:description" content="Create AI images, explore beautiful photos. Works offline!">
+
+    <style>
+        /* Offline banner - inline for immediate display */
+        .offline-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 99999;
+            background: #f39c12;
+            color: white;
+            text-align: center;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            animation: slideDown 0.3s ease;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">📸</span>
+                <span class="logo-text">Photo<strong>Store</strong></span>
+            </a>
+            <div class="nav-search">
+                <input type="text" id="searchInput" placeholder="Search for free photos...">
+                <button class="nav-search-btn" id="searchBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
+            </div>
+            <div class="nav-links"></div>
+            <div class="nav-actions">
+                <button class="nav-ai-btn" id="aiGenerateBtn">✨ AI Image</button>
+                <button class="nav-fav-toggle" id="favToggle" title="Favorites">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <span class="fav-count" id="favCount">0</span>
+                </button>
+                <button class="nav-games-btn" id="gamesNavBtn">🎮 Games</button>
+                <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle dark mode">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <button class="nav-auth-btn" id="loginBtn">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero / Welcome Section -->
+    <section class="hero-mini" id="heroMini">
+        <div class="hero-mini-content">
+            <h1>Welcome to PhotoStore ✨</h1>
+            <p>Create AI images and explore a beautiful gallery.</p>
+            <div class="hero-mini-actions">
+                <button class="hero-ai-btn" id="heroAiBtn">🎨 Generate Image</button>
+                <button class="hero-games-btn" id="heroGamesBtn">🎮 Play Games</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="auth-overlay" id="authOverlay"></div>
+    <div class="auth-modal" id="authModal">
+        <button class="auth-close" id="authClose">✕</button>
+        <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="login">Login</button>
+            <button class="auth-tab" data-tab="signup">Sign Up</button>
+        </div>
+        <div class="auth-content">
+            <form class="auth-form" id="loginForm">
+                <div class="auth-field">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="auth-field">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="auth-submit">Login</button>
+            </form>
+            <form class="auth-form hidden" id="signupForm">
+                <div class="auth-field">
+                    <label>Your Name</label>
+                    <input type="text" id="signupName" placeholder="What should we call you?" maxlength="30" required>
+                </div>
+                <button type="submit" class="auth-submit">Join PhotoStore</button>
+                <p class="auth-note">No email or password needed — just pick a name!</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose">✕</button>
+            <button class="lightbox-prev" id="lightboxPrev">‹</button>
+            <button class="lightbox-next" id="lightboxNext">›</button>
+            <div class="lightbox-image-wrapper">
+                <img class="lightbox-image" id="lightboxImage" src="" alt="">
+            </div>
+            <div class="lightbox-bar">
+                <div class="lightbox-photographer">
+                    <div class="lightbox-avatar" id="lightboxAvatar">AT</div>
+                    <div>
+                        <span class="lightbox-artist" id="lightboxArtist">Artist</span>
+                        <span class="lightbox-category" id="lightboxCategory">Category</span>
+                    </div>
+                </div>
+                <div class="lightbox-actions">
+                    <button class="lightbox-action-btn fav-action" id="lightboxFav">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        Favorite
+                    </button>
+                    <button class="lightbox-action-btn" id="lightboxDownload">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Sidebar -->
+    <div class="fav-overlay" id="favOverlay"></div>
+    <div class="fav-sidebar" id="favSidebar">
+        <div class="fav-header">
+            <h3>❤️ Your Favorites</h3>
+            <button class="fav-close" id="favClose">✕</button>
+        </div>
+        <div class="fav-items" id="favItems">
+            <div class="fav-empty">
+                <span>❤️</span>
+                <p>No favorites yet</p>
+                <small>Click the heart icon on any photo to save it here</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Image Generation Modal -->
+    <div class="ai-overlay" id="aiOverlay"></div>
+    <div class="ai-modal" id="aiModal">
+        <button class="ai-close" id="aiClose">✕</button>
+        <div class="ai-header">
+            <div class="ai-header-icon">✨</div>
+            <h2>Create Your Own Picture</h2>
+            <p>Describe what you want to see — AI will bring it to life</p>
+        </div>
+        <div class="ai-content">
+            <form class="ai-form" id="aiForm">
+                <div class="ai-field">
+                    <label>📝 Prompt</label>
+                    <textarea id="aiPrompt" placeholder="A serene mountain landscape at sunset with golden light..." rows="3" maxlength="500" required></textarea>
+                    <span class="ai-char-count"><span id="aiCharCount">0</span>/500</span>
+                </div>
+                <div class="ai-options-grid">
+                    <div class="ai-field">
+                        <label>🎨 Style</label>
+                        <select id="aiStyle">
+                            <option value="vivid">Vivid</option>
+                            <option value="natural">Natural</option>
+                            <option value="anime">Anime</option>
+                            <option value="cinematic">Cinematic</option>
+                            <option value="fantasy">Fantasy</option>
+                            <option value="sketch">Sketch</option>
+                        </select>
+                    </div>
+                    <div class="ai-field">
+                        <label>📐 Aspect</label>
+                        <select id="aiAspect">
+                            <option value="1024x1024">Square 1:1</option>
+                            <option value="1024x768">Landscape 4:3</option>
+                            <option value="768x1024">Portrait 3:4</option>
+                            <option value="1280x720">Wide 16:9</option>
+                            <option value="720x1280">Story 9:16</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="ai-submit" id="aiSubmitBtn">
+                    <span class="ai-btn-text">✨ Generate Image</span>
+                    <span class="ai-btn-loading">⏳ Generating...</span>
+                </button>
+            </form>
+            <div class="ai-result" id="aiResult" style="display:none;">
+                <div class="ai-result-image-wrapper">
+                    <img id="aiGeneratedImage" src="" alt="AI Generated Image">
+                </div>
+                <div class="ai-result-actions">
+                    <button class="ai-download-btn" id="aiDownloadBtn">⬇ Download</button>
+                    <button class="ai-add-gallery-btn" id="aiAddToGalleryBtn">🌐 Add to Gallery</button>
+                    <button class="ai-create-new-btn" id="aiCreateNewBtn">← Create New</button>
+                </div>
+            </div>
+            <div class="ai-suggestions" id="aiSuggestions">
+                <label>💡 Try these:</label>
+                <div class="ai-suggestion-chips">
+                    <button class="ai-chip" data-prompt="A magical forest with glowing mushrooms and fireflies at night, digital art">✨ Magical forest</button>
+                    <button class="ai-chip" data-prompt="Portrait of a cyberpunk samurai in neon-lit Tokyo street, cinematic lighting">🎌 Cyberpunk samurai</button>
+                    <button class="ai-chip" data-prompt="Futuristic city with flying cars and holographic billboards at sunset">🌆 Futuristic city</button>
+                    <button class="ai-chip" data-prompt="A cute fluffy cat wearing a wizard hat casting a spell, cartoon style">🐱 Wizard cat</button>
+                    <button class="ai-chip" data-prompt="Underwater city with glass domes and ancient ruins, ethereal lighting">🌊 Underwater city</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <section class="filters-section" id="filtersSection">
+        <div class="container">
+            <div class="filter-bar" id="filterBar">
+                <button class="filter-btn active" data-category="all">🌄 Explore</button>
+                <button class="filter-btn" data-category="nature">🌿 Nature</button>
+                <button class="filter-btn" data-category="architecture">🏛 Architecture</button>
+                <button class="filter-btn" data-category="travel">✈ Travel</button>
+                <button class="filter-btn" data-category="wildlife">🦁 Wildlife</button>
+                <button class="filter-btn" data-category="food">🍕 Food</button>
+                <button class="filter-btn" data-category="technology">💻 Technology</button>
+                <button class="filter-btn" data-category="fashion">👗 Fashion</button>
+                <button class="filter-btn" data-category="abstract">🎨 Abstract</button>
+                <button class="filter-btn" data-category="portrait">👤 Portrait</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <div class="masonry-grid" id="masonryGrid"></div>
+            <div class="no-results" id="noResults" style="display:none;">
+                <span class="no-results-icon">🔍</span>
+                <h3>No photos found</h3>
+                <p>Try adjusting your search or filter to find what you're looking for.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer footer-mini">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 PhotoStore — Create &amp; Explore.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/trending.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/lightbox.js"></script>
+    <script src="js/download.js"></script>
+    <script src="js/infinite.js"></script>
+    <script src="js/loadMore.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/darkmode.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/comments.js"></script>
+    <script src="js/ratings.js"></script>
+    <script src="js/tags.js"></script>
+    <script src="js/albums.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/explore.js"></script>
+    <script src="js/filters-ui.js"></script>
+    <script src="js/batch-download.js"></script>
+    <script src="js/collage.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/share.js"></script>
+    <script src="js/slideshow.js"></script>
+    <script src="js/music.js"></script>
+    <script src="js/profiles.js"></script>
+    <script src="js/parallax.js"></script>
+    <script src="js/color-match.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/heatmap.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/games.js"></script>
+    <script src="js/gallery.js"></script>
+
+    <script>
+        // PWA DISABLED IN HUB MODE
+        console.log('PhotoStore running in hub mode - PWA features disabled');
+    </script>
+</body>
+</html>

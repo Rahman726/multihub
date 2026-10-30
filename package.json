@@ -1,0 +1,13 @@
+{
+  "name": "quizai-hub",
+  "version": "1.0.0",
+  "description": "App Hub for QuizAI collection",
+  "main": "hub-server.js",
+  "scripts": {
+    "start": "node hub-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}

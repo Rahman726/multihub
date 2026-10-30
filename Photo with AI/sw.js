@@ -5,6 +5,13 @@ const STATIC_CACHE = 'photostore-static-v3';
 const IMAGE_CACHE = 'photostore-images-v3';
 const DYNAMIC_CACHE = 'photostore-dynamic-v3';
 
+// Disable service worker in hub mode
+const isHubMode = self.location.pathname.startsWith('/photoai/');
+if (isHubMode) {
+    // Don't activate if in hub mode
+    self.skipWaiting();
+}
+
 // Assets to pre-cache on install (core app shell)
 const PRECACHE_ASSETS = [
     '/',

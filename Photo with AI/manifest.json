@@ -69,29 +69,7 @@
             "type": "image/svg+xml"
         }
     ],
-    "shortcuts": [
-        {
-            "name": "Generate AI Image",
-            "short_name": "AI Image",
-            "description": "Create a new AI-generated image",
-            "url": "/?action=ai-generate",
-            "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='16' fill='%23667eea'/%3E%3Ctext x='48' y='66' font-size='48' text-anchor='middle' fill='white'%3E✨%3C/text%3E%3C/svg%3E", "sizes": "96x96"}]
-        },
-        {
-            "name": "View Favorites",
-            "short_name": "Favorites",
-            "description": "View your favorite photos",
-            "url": "/?action=favorites",
-            "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='16' fill='%23e74c3c'/%3E%3Ctext x='48' y='66' font-size='48' text-anchor='middle' fill='white'%3E❤️%3C/text%3E%3C/svg%3E", "sizes": "96x96"}]
-        },
-        {
-            "name": "Explore Gallery",
-            "short_name": "Explore",
-            "description": "Browse the photo gallery",
-            "url": "/?action=explore",
-            "icons": [{"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='16' fill='%2305a081'/%3E%3Ctext x='48' y='66' font-size='48' text-anchor='middle' fill='white'%3E🌄%3C/text%3E%3C/svg%3E", "sizes": "96x96"}]
-        }
-    ],
+    "shortcuts": [],
     "related_applications": [],
     "prefer_related_applications": false,
     "serviceworker": {
@@ -110,7 +88,7 @@
         }
     },
     "launch_handler": {
-        "client_mode": ["navigate-existing", "auto"]
+        "client_mode": "auto"
     },
     "edge_side_panel": {},
     "protocol_handlers": [],

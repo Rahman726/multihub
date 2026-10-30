@@ -37,6 +37,21 @@
     
     <!-- Register service worker & offline detection -->
     <script>
+        // Disable PWA features when accessed through hub
+        const isHubMode = window.location.pathname.startsWith('/photoai/');
+
+        // Hide install button in hub mode
+        if (isHubMode) {
+            window.addEventListener('DOMContentLoaded', () => {
+                const installBtn = document.getElementById('installAppBtn');
+                const heroInstallBtn = document.getElementById('heroInstallBtn');
+                const footerInstall = document.getElementById('footerInstall');
+                if (installBtn) installBtn.style.display = 'none';
+                if (heroInstallBtn) heroInstallBtn.style.display = 'none';
+                if (footerInstall) footerInstall.style.display = 'none';
+            });
+        }
+
         // Offline detection
         window.addEventListener('online', () => {
             document.documentElement.classList.remove('is-offline');
@@ -46,7 +61,7 @@
             document.documentElement.classList.add('is-offline');
             showOfflineBanner();
         });
-        
+
         function showOfflineBanner() {
             if (document.querySelector('.offline-banner')) return;
             const banner = document.createElement('div');
@@ -54,9 +69,9 @@
             banner.innerHTML = '📡 You are offline — most features still work!';
             document.body.prepend(banner);
         }
-        
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
+
+        // Service Worker Registration - DISABLED in hub mode
+        if (!isHubMode && 'serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js').then(reg => {
                     console.log('SW registered. Scope:', reg.scope);
@@ -76,7 +91,7 @@
                 }).catch(e => console.warn('SW registration failed:', e));
             });
         }
-        
+
         // Detect if already offline on load
         if (!navigator.onLine) {
             document.documentElement.classList.add('is-offline');

@@ -4,6 +4,13 @@ let currentPhotoIndex = 0;
 let currentCategory = 'all';
 let currentSearchTerm = '';
 
+// Check if coming from Hub with token
+const hubToken = sessionStorage.getItem('hubToken');
+if (hubToken) {
+    console.log('Authenticated via Hub');
+    sessionStorage.removeItem('hubToken');
+}
+
 const photoGrid = document.getElementById('photoGrid');
 const loadingEl = document.getElementById('loading');
 const loadMoreBtn = document.getElementById('loadMoreBtn');

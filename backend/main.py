@@ -27,6 +27,7 @@ app = FastAPI(title="Speedy Quiz API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -337,6 +338,6 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host=os.getenv("HOST", "127.0.0.1"),
-        port=int(os.getenv("PORT", "9000")),
+        port=int(os.getenv("PORT", "8000")),
         reload=True,
     )

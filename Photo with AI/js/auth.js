@@ -9,7 +9,7 @@ const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
 
 // ===================== AUTH =====================
-const API_BASE = '/api';
+const API_BASE = '/api'; // Will be proxied through hub
 
 // Offline-first auth: use localStorage immediately, then verify with server if available
 let currentUser = JSON.parse(localStorage.getItem('photoStoreUser') || 'null');
@@ -19,9 +19,23 @@ let authToken = localStorage.getItem('photoStoreToken') || '';
 const LOCAL_USERS_KEY = 'photoStoreLocalUsers';
 
 function initAuth() {
+    // Check if coming from Hub with token
+    const hubToken = sessionStorage.getItem('hubToken');
+    if (hubToken) {
+        authToken = hubToken;
+        localStorage.setItem('photoStoreToken', hubToken);
+        sessionStorage.removeItem('hubToken');
+        // Create a dummy user for hub authentication
+        currentUser = { name: 'Hub User', email: 'hub@user.com' };
+        localStorage.setItem('photoStoreUser', JSON.stringify(currentUser));
+        updateAuthUI();
+        hideAuthGate();
+        return;
+    }
+
     // Update login button based on auth state
     updateAuthUI();
-    
+
     // If we have a token saved, try to verify with server (non-blocking)
     if (authToken && currentUser) {
         verifyToken().catch(() => {
