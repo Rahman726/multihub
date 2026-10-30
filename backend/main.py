@@ -2,6 +2,8 @@ import json
 import os
 import uuid
 from datetime import datetime
+import urllib.parse
+import time
 
 import uvicorn
 from fastapi import FastAPI, HTTPException, Header
@@ -11,9 +13,14 @@ from pydantic import BaseModel, Field
 
 from llm import generate_questions, generate_questions_batch
 import users
+import requests
+import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.join(os.path.dirname(BASE_DIR), "frontend")
+
+# Photo Store AI base URL
+PHOTO_AI_BASE = os.getenv("PHOTO_AI_BASE", "http://localhost:9001")
 
 app = FastAPI(title="Speedy Quiz API")
 
