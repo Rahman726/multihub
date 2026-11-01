@@ -391,7 +391,7 @@
             signupForm.reset();
         });
 
-        // Open App
+        // Open App in new window
         function openApp(appType) {
             const token = localStorage.getItem('token');
             let url;
@@ -415,7 +415,9 @@
 
             // Store token for the app to use
             sessionStorage.setItem('hubToken', token);
-            window.location.href = url;
+
+            // Open in new window/tab
+            window.open(url, '_blank');
         }
 
         // Check if already logged in
