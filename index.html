@@ -389,35 +389,24 @@
             authScreen.classList.remove('hidden');
             loginForm.reset();
             signupForm.reset();
-        });
-
-        // Open App in new window
+        });// Open App in current window (same tab)
         function openApp(appType) {
             const token = localStorage.getItem('token');
             let url;
 
             switch(appType) {
-                case 'quiz':
-                    url = '/quiz/';
-                    break;
-                case 'quran':
-                    url = '/quran/';
-                    break;
-                case 'photostore':
-                    url = '/photostore/';
-                    break;
-                case 'photoai':
-                    url = '/photoai/';
-                    break;
-                default:
-                    return;
+                case 'quiz': url = '/quiz/'; break;
+                case 'quran': url = '/quran/'; break;
+                case 'photostore': url = '/photostore/'; break;
+                case 'photoai': url = '/photoai/'; break;
+                default: return;
             }
 
             // Store token for the app to use (localStorage for cross-window sharing)
             localStorage.setItem('hubToken', token);
 
-            // Open in new window/tab
-            window.open(url, '_blank');
+            // Navigate in current window/tab (opens in same tab)
+            window.location.href = url;
         }
 
         // Check if already logged in

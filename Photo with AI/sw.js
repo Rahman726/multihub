@@ -149,8 +149,20 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Same-origin static assets: Cache-first strategy
+    // Same-origin static assets: Cache-first strategy (exclude HTML documents)
     if (isSameOrigin(url) && !isApiRequest(url) && !isImageRequest(url)) {
+        // Skip caching for HTML documents to prevent stale content on refresh
+        if (request.destination === 'document') {
+            return fetch(request).then((response) => {
+                if (response.ok) {
+                    const cacheCopy = response.clone();
+                    // intentionally not caching HTML documents
+                }
+                return response;
+            }).catch(() => {
+                return caches.match('/');
+            });
+        }
         event.respondWith(
             caches.match(request).then((cachedResponse) => {
                 return cachedResponse || fetch(request).then((response) => {
