@@ -1,0 +1,12 @@
+node_modules/
+.env
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+*.db
+backend/__pycache__/
+backend/quiz.db
+backend/server.log
+backend/leaderboard.json
+backend/fallback_questions.json
