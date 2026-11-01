@@ -10,6 +10,14 @@ const PORT = process.env.PORT || 9000;
 app.use(cors());
 app.use(express.json());
 
+// Disable caching for development
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+});
+
 // ===================== HUB AUTHENTICATION =====================
 // Use the QuizAI backend for authentication
 const QUIZ_BACKEND_URL = 'http://127.0.0.1:8000';
@@ -307,7 +315,7 @@ app.all('/api/user/*', async (req, res) => {
 // ===================== STATIC MOUNTS =====================
 
 // Hub (root) - the main app selector - must be FIRST
-app.use('/', express.static(__dirname, {
+app.use(express.static(__dirname, {
     index: 'index.html'
 }));
 

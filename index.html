@@ -413,8 +413,8 @@
                     return;
             }
 
-            // Store token for the app to use
-            sessionStorage.setItem('hubToken', token);
+            // Store token for the app to use (localStorage for cross-window sharing)
+            localStorage.setItem('hubToken', token);
 
             // Open in new window/tab
             window.open(url, '_blank');

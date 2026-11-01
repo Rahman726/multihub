@@ -2,9 +2,7 @@ const API = ""; // Use same origin (proxied through hub)
 
 const el = (id) => document.getElementById(id);
 const screens = {
-  auth: el("auth-screen"),
-  appSelection: el("app-selection-screen"),
-  subjects: el("subjects-screen"), // shown after choosing quiz
+  subjects: el("subjects-screen"), // shown after login from Hub
   start: el("start-screen"), // scores & settings
   quiz: el("quiz-screen"),
   result: el("result-screen"),
@@ -121,32 +119,11 @@ el("back-btn").addEventListener("click", () => {
   el("start-error").classList.add("hidden");
   show("subjects");
 });
-if (el("back-to-apps")) {
-  el("back-to-apps").addEventListener("click", () => {
-    show("appSelection");
-  });
-}
 el("again-btn").addEventListener("click", () => {
   refreshLeaderboard();
-  show("appSelection"); // Play Again returns to app selection
+  show("subjects"); // Play Again returns to subjects
 });
 el("save-btn").addEventListener("click", saveScore);
-
-if (el("choose-quiz-btn")) {
-  el("choose-quiz-btn").addEventListener("click", () => {
-    show("subjects");
-  });
-}
-if (el("choose-quran-btn")) {
-  el("choose-quran-btn").addEventListener("click", () => {
-    window.location.href = 'quran/index.html';
-  });
-}
-if (el("choose-quiz-btn")) {
-  el("choose-quiz-btn").addEventListener("click", () => {
-    show("subjects");
-  });
-}
 
 refreshLeaderboard();
 
@@ -180,65 +157,6 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-/* ---------- auth screen: tabs + login + signup ---------- */
-document.querySelectorAll(".auth-tab").forEach((tab) => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".auth-tab").forEach((t) => t.classList.remove("active"));
-    tab.classList.add("active");
-    const isLogin = tab.id === "tab-login";
-    el("login-form").classList.toggle("hidden", !isLogin);
-    el("signup-form").classList.toggle("hidden", isLogin);
-  });
-});
-
-function setAuthError(form, message) {
-  const p = el(form + "-error");
-  p.textContent = message;
-  p.classList.remove("hidden");
-}
-
-async function submitAuth(kind) {
-  const btn = el(kind + "-form").querySelector("button");
-  const username = el(kind + "-username").value.trim();
-  const password = el(kind + "-password").value;
-  const errEl = el(kind + "-error");
-  errEl.classList.add("hidden");
-  btn.disabled = true;
-  try {
-    const res = await fetch(`${API}/api/${kind}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || `Server error ${res.status}`);
-    setToken(data.token);
-    afterLogin(data.username);
-  } catch (err) {
-    setAuthError(kind, err.message);
-  } finally {
-    btn.disabled = false;
-  }
-}
-
-el("login-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  submitAuth("login");
-});
-el("signup-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  submitAuth("signup");
-});
-
-// Check if coming from Hub with token
-const hubToken = sessionStorage.getItem('hubToken');
-if (hubToken) {
-  setToken(hubToken);
-  sessionStorage.removeItem('hubToken');
-  // Skip auth screen and go to app selection
-  afterLogin('User');
-}
-
 el("sound-btn").textContent = AudioFX.muted() ? "🔇" : "🔊";
 el("sound-btn").addEventListener("click", () => {
   const m = AudioFX.toggleMute();
@@ -252,24 +170,19 @@ const doLogout = async () => {
     /* still clear the local token */
   }
   clearToken();
-  if (el("login-password")) el("login-password").value = "";
-  if (el("signup-password")) el("signup-password").value = "";
   if (el("history-list")) el("history-list").innerHTML = "";
   AudioFX.stopBackground();
-  show("auth");
+  // Redirect to Hub
+  window.location.href = '/';
 };
 
 if (el("logout-btn")) el("logout-btn").addEventListener("click", doLogout);
-if (el("logout-btn2")) el("logout-btn2").addEventListener("click", doLogout);
 
 async function afterLogin(username) {
   window.currentUser = username; // used to prefill the leaderboard name
-  el("user-name").textContent = username;
   if (el("user-name-subj")) el("user-name-subj").textContent = username;
-  el("welcome-user").textContent = username;
-  if (el("welcome-msg")) el("welcome-msg").classList.remove("hidden");
   document.querySelectorAll("#subjects .chip").forEach((c) => c.classList.remove("active")); // fresh chooser
-  show("appSelection"); // show app selection first after login
+  show("subjects"); // show subjects directly after login
   loadHistory();
   AudioFX.welcome(); // welcome sound (blocked silently if no user gesture yet)
 }
@@ -308,19 +221,18 @@ async function loadHistory() {
 
 /* ---------- initial auth check ---------- */
 (async function checkToken() {
-  if (!getToken()) {
-    show("auth");
+  // Check if coming from Hub with token
+  const hubToken = localStorage.getItem('hubToken');
+  if (hubToken) {
+    setToken(hubToken);
+    localStorage.removeItem('hubToken');
+    // Go to subjects directly
+    afterLogin('User');
     return;
   }
-  try {
-    const res = await fetch(`${API}/api/me`, { headers: authHeaders() });
-    if (!res.ok) throw new Error();
-    const data = await res.json();
-    afterLogin(data.username);
-  } catch {
-    clearToken();
-    show("auth");
-  }
+
+  // If no hubToken, redirect to Hub
+  window.location.href = '/';
 })();
 
 async function startQuiz() {
