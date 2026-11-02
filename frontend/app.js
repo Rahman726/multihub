@@ -220,19 +220,20 @@ async function loadHistory() {
 }
 
 /* ---------- initial auth check ---------- */
-(async function checkToken() {
-  // Check if coming from Hub with token
+// Check if coming from Hub with token (only on initial load, not on every app switch)
+// This runs once when app.js loads from the hub
+// hubToken is a one-time transfer token from hub to app
+(function checkToken() {
   const hubToken = localStorage.getItem('hubToken');
   if (hubToken) {
     setToken(hubToken);
-    localStorage.removeItem('hubToken');
+    // Dont remove hubToken automatically - let the app decide when to use it
     // Go to subjects directly
     afterLogin('User');
     return;
   }
-
-  // If no hubToken, redirect to Hub
-  window.location.href = '/';
+  // If no hubToken, Dont redirect - let the app use sq_token for normal auth
+  // Users who logged in via auth screen will have sq_token persist across app switches
 })();
 
 async function startQuiz() {
