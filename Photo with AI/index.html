@@ -147,12 +147,12 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                     <span class="fav-count" id="favCount">0</span>
                 </button>
-                <button class="nav-games-btn" id="gamesNavBtn">🎮 Games</button>
+                
                 <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle dark mode">
                     <span class="sun-icon">☀️</span>
                     <span class="moon-icon">🌙</span>
                 </button>
-                <button class="nav-auth-btn" id="loginBtn">Login</button>
+                
             </div>
         </div>
     </nav>
@@ -165,7 +165,7 @@
             <div class="hero-mini-actions">
                 <button class="hero-ai-btn" id="heroAiBtn">🎨 Generate Image</button>
                 <button class="hero-games-btn" id="heroGamesBtn">🎮 Play Games</button>
-                <button class="hero-install-btn" id="heroInstallBtn">📲 Install App</button>
+                
             </div>
         </div>
     </section>
@@ -357,138 +357,13 @@
         <div class="container">
             <div class="footer-bottom">
                 <p>&copy; 2026 PhotoStore — Create &amp; Explore.</p>
-                <div class="footer-install" id="footerInstall">
-                    <button class="footer-install-btn" id="footerInstallBtn">📲 Install PhotoStore on Your Device</button>
-                </div>
+                
             </div>
         </div>
     </footer>
 
     <!-- Games Modal -->
     <div class="games-overlay" id="gamesOverlay"></div>
-    <div class="games-modal" id="gamesModal">
-        <button class="games-close" id="gamesClose">✕</button>
-        <div class="games-header">
-            <h2>🎮 Kids Games Zone</h2>
-            <p>Fun games for kids! Play and have a great time 🎉</p>
-        </div>
-        
-        <!-- Game Lobby -->
-        <div class="game-lobby" id="gameLobby">
-            <!-- Leaderboard Section -->
-            <div class="scores-section" id="scoresSection">
-                <div class="scores-header">
-                    <span class="scores-title">🏆 Best Scores</span>
-                    <button class="scores-reset-btn" id="resetScoresBtn" onclick="resetAllScores()" title="Reset all scores">🗑️</button>
-                </div>
-                <div class="scores-grid" id="scoresGrid">
-                    <div class="score-item"><span class="score-icon">🧠</span> <span class="score-name">Memory:</span> <span class="score-val" id="score-memory">--</span></div>
-                    <div class="score-item"><span class="score-icon">🧩</span> <span class="score-name">Puzzle:</span> <span class="score-val" id="score-puzzle">--</span></div>
-                    <div class="score-item"><span class="score-icon">🔨</span> <span class="score-name">Whack:</span> <span class="score-val" id="score-whack">--</span></div>
-                    <div class="score-item"><span class="score-icon">❌</span> <span class="score-name">Tic-Tac-Toe:</span> <span class="score-val" id="score-ttt">--</span></div>
-                    <div class="score-item"><span class="score-icon">🔴</span> <span class="score-name">Simon:</span> <span class="score-val" id="score-simon">--</span></div>
-                </div>
-            </div>
-            <div class="game-cards">
-                <div class="game-card" onclick="startGame('memory')">
-                    <span class="game-card-badge">⭐ Popular</span>
-                    <span class="game-card-icon">🧠</span>
-                    <h3>Memory Match</h3>
-                    <p>Flip cards and find matching pairs! Test your memory 🃏</p>
-                </div>
-                <div class="game-card" onclick="startGame('puzzle')">
-                    <span class="game-card-icon">🧩</span>
-                    <h3>Sliding Puzzle</h3>
-                    <p>Rearrange the tiles in order! A fun brain teaser 🧠</p>
-                </div>
-                <div class="game-card" onclick="startGame('whack')">
-                    <span class="game-card-badge">🔥 Goal: 20</span>
-                    <span class="game-card-icon">🔨</span>
-                    <h3>Whack-a-Emoji</h3>
-                    <p>Score 20 points to WIN! Tap emojis fast! 💨</p>
-                </div>
-                <div class="game-card" onclick="startGame('ttt')">
-                    <span class="game-card-icon">❌</span>
-                    <h3>Tic-Tac-Toe</h3>
-                    <p>Play X vs AI! Can you beat the computer? 🤖</p>
-                </div>
-                <div class="game-card" onclick="startGame('simon')">
-                    <span class="game-card-badge">🧠 Memory</span>
-                    <span class="game-card-icon">🔴</span>
-                    <h3>Simon Says</h3>
-                    <p>Remember the color pattern and repeat it! 🧠</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Game Container -->
-        <div class="game-container hidden" id="gameContainer">
-            <button class="games-back-btn hidden" id="backToLobbyBtn">← Back to Games</button>
-            
-            <!-- Memory Match Game -->
-            <div class="game-content hidden" id="memoryGame">
-                <h3 style="text-align:center;font-size:1.3rem;font-weight:700;margin-bottom:8px;">🧠 Memory Match</h3>
-                <div class="memory-header">
-                    <span>Moves: <strong id="memoryMoves">0</strong></span>
-                    <span>Time: <strong id="memoryTimer">0s</strong></span>
-                </div>
-                <div class="memory-board" id="memoryBoard"></div>
-            </div>
-            
-            <!-- Sliding Puzzle Game -->
-            <div class="game-content hidden" id="puzzleGame">
-                <h3 style="text-align:center;font-size:1.3rem;font-weight:700;margin-bottom:8px;">🧩 Sliding Puzzle</h3>
-                <div class="puzzle-size-selector">
-                    <button class="puzzle-size-btn active" onclick="changePuzzleSize(3)">3×3</button>
-                    <button class="puzzle-size-btn" onclick="changePuzzleSize(4)">4×4</button>
-                    <button class="puzzle-size-btn" onclick="changePuzzleSize(5)">5×5</button>
-                </div>
-                <div class="puzzle-header">
-                    <span>Moves: <strong id="puzzleMoves">0</strong></span>
-                    <span>Time: <strong id="puzzleTimer">0s</strong></span>
-                </div>
-                <div class="puzzle-board" id="puzzleBoard"></div>
-            </div>
-            
-            <!-- Whack-a-Emoji Game -->
-            <div class="game-content hidden" id="whackGame">
-                <h3 style="text-align:center;font-size:1.3rem;font-weight:700;margin-bottom:8px;">🔨 Whack-a-Emoji</h3>
-                <div class="whack-goal-bar">
-                    <div class="whack-goal-label">🎯 Goal: <strong id="whackGoal">20</strong> points to WIN!</div>
-                    <div class="whack-progress-track">
-                        <div class="whack-progress-fill" id="whackProgressBar">0%</div>
-                    </div>
-                </div>
-                <div class="whack-header">
-                    <span>Score: <strong id="whackScore">0</strong></span>
-                    <span>Time: <strong id="whackTimerDisplay">30s</strong></span>
-                </div>
-                <div class="whack-board" id="whackBoard"></div>
-            </div>
-            
-            <!-- Tic-Tac-Toe Game -->
-            <div class="game-content hidden" id="tttGame">
-                <h3 style="text-align:center;font-size:1.3rem;font-weight:700;margin-bottom:8px;">❌ Tic-Tac-Toe ⭕</h3>
-                <div class="ttt-status" id="tttStatus">Your turn (X)</div>
-                <div class="ttt-board" id="tttBoard"></div>
-            </div>
-            
-            <!-- Simon Says Game -->
-            <div class="game-content hidden" id="simonGame">
-                <h3 style="text-align:center;font-size:1.3rem;font-weight:700;margin-bottom:8px;">🔴🟡 Simon Says 🟢🔵</h3>
-                <div class="simon-header">
-                    <span>Round: <strong id="simonRound">1</strong></span>
-                </div>
-                <div class="simon-status" id="simonStatus">Watch the pattern... 👀</div>
-                <div class="simon-board">
-                    <div class="simon-color simon-green" id="simon-green" onclick="simonColorClick(0)">🟢</div>
-                    <div class="simon-color simon-red" id="simon-red" onclick="simonColorClick(1)">🔴</div>
-                    <div class="simon-color simon-yellow" id="simon-yellow" onclick="simonColorClick(2)">🟡</div>
-                    <div class="simon-color simon-blue" id="simon-blue" onclick="simonColorClick(3)">🔵</div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Game Result Modal -->
     <div class="game-result-modal" id="gameResultModal">
@@ -517,7 +392,7 @@
     <script src="js/infinite.js"></script>
     <script src="js/toast.js"></script>
     <script src="js/stats-tracker.js"></script>
-    <script src="js/games.js"></script>
+    
     <script src="js/loadMore.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/ai.js"></script>

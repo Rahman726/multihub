@@ -23,12 +23,30 @@ let lastPrompt = '';
 let lastStyle = 'vivid';
 let lastAspect = '1024x1024';
 
-// Character count
+// Character count & caching
+const aiCache = JSON.parse(localStorage.getItem('aiImageCache') || '{}');
+
 if (aiPrompt) {
     aiPrompt.addEventListener('input', () => {
         const count = aiPrompt.value.length;
         aiCharCount.textContent = count;
     });
+}
+
+// Cache lookup for generated images
+function getCachedImageUrl(prompt, style, aspect) {
+    const cacheKey = `${prompt}-${style}-${aspect}`;
+    if (aiCache[cacheKey]) {
+        return aiCache[cacheKey];
+    }
+    return null;
+}
+
+// Cache store for generated images
+function cacheImageUrl(prompt, style, aspect, imageUrl) {
+    const cacheKey = `${prompt}-${style}-${aspect}`;
+    aiCache[cacheKey] = imageUrl;
+    localStorage.setItem('aiImageCache', JSON.stringify(aiCache));
 }
 
 // Suggestion chips
@@ -67,23 +85,21 @@ aiOverlay.addEventListener('click', closeAIModal);
 // Generate Pollinations.ai URL directly on the client (no server needed!)
 function generateImageUrl(prompt, style, aspect) {
     const encodedPrompt = encodeURIComponent(prompt);
-    const seed = Math.floor(Math.random() * 999999);
-    
-    // Parse aspect ratio
-    let width = 1024, height = 1024;
+    const seed = Math.floor(Math.random() * 999999);// Parse aspect ratio - smaller defaults for faster generation
+    let width = 512, height = 512;
     if (aspect) {
         const parts = aspect.split('x');
         if (parts.length === 2) {
-            width = parseInt(parts[0]) || 1024;
-            height = parseInt(parts[1]) || 1024;
+            width = parseInt(parts[0]) || 512;
+            height = parseInt(parts[1]) || 512;
         }
     }
-    
+
     // Style-specific model selection
     let model = 'flux';
     if (style === 'anime') model = 'flux';
     else if (style === 'sketch') model = 'flux';
-    
+
     return `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&model=${model}&seed=${seed}&enhance=true`;
 }
 
@@ -102,6 +118,23 @@ aiForm.addEventListener('submit', async (e) => {
     lastPrompt = prompt;
     lastStyle = style;
     lastAspect = aspect;
+
+    // Check cache first for instant loading
+    const cachedUrl = getCachedImageUrl(prompt, style, aspect);
+    if (cachedUrl) {
+        currentGeneratedImageUrl = cachedUrl;
+        aiGeneratedImage.src = cachedUrl;
+        aiResult.style.display = 'block';
+        aiForm.style.display = 'none';
+        aiSuggestions.style.display = 'none';
+        showToast('✨ Cached image loaded!');
+        if (typeof trackEvent === 'function') {
+            trackEvent('ai_cached', { prompt, style });
+        }
+        aiSubmitBtn.disabled = false;
+        aiSubmitBtn.classList.remove('loading');
+        return;
+    }
 
     aiSubmitBtn.disabled = true;
     aiSubmitBtn.classList.add('loading');
@@ -128,6 +161,8 @@ aiForm.addEventListener('submit', async (e) => {
                 const data = await response.json();
                 if (data.success && data.imageUrl) {
                     imageUrl = data.imageUrl;
+                    // Cache the generated URL
+                    cacheImageUrl(prompt, style, aspect, imageUrl);
                 }
             }
         } catch (serverErr) {
@@ -138,6 +173,8 @@ aiForm.addEventListener('submit', async (e) => {
         // If server failed, generate URL directly (no server needed!)
         if (!imageUrl) {
             imageUrl = generateImageUrl(prompt, style, aspect);
+            // Cache the directly generated URL
+            cacheImageUrl(prompt, style, aspect, imageUrl);
             if (serverOffline) {
                 showToast('✨ Generating (offline mode)...');
             }
@@ -164,6 +201,8 @@ aiForm.addEventListener('submit', async (e) => {
         // Last resort: generate URL directly
         try {
             const fallbackUrl = generateImageUrl(prompt, style, aspect);
+            // Cache the fallback URL
+            cacheImageUrl(prompt, style, aspect, fallbackUrl);
             currentGeneratedImageUrl = fallbackUrl;
             aiGeneratedImage.src = fallbackUrl;
             aiResult.style.display = 'block';
