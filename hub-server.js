@@ -4,7 +4,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const app = express();
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 1001;
 
 // Middleware
 app.use(cors());
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 const QUIZ_BACKEND_URL = 'http://127.0.0.1:8000';
 
 // Photo with AI backend
-const PHOTO_AI_BACKEND_URL = 'http://127.0.0.1:9002';
+const PHOTO_AI_BACKEND_URL = 'http://127.0.0.1:9001';
 
 // Proxy auth requests to QuizAI backend
 app.post('/api/login', async (req, res) => {
@@ -312,30 +312,23 @@ app.all('/api/user/*', async (req, res) => {
     }
 });
 
-// ===================== STATIC MOUNTS =====================
-
-// Hub (root) - the main app selector - must be FIRST
-app.use(express.static(__dirname, {
-    index: 'index.html'
-}));
-
 // Quiz App at /quiz/
-app.use('/quiz', express.static(path.join(__dirname, 'frontend'), {
+app.use('/quiz', express.static(path.join(__dirname, 'frontend', 'speedy-quiz-frontend'), {
     index: 'index.html'
 }));
 
 // Quran App at /quran/
-app.use('/quran', express.static(path.join(__dirname, 'Quran', 'QURAN-main'), {
+app.use('/quran', express.static(path.join(__dirname, 'frontend', 'quran-frontend'), {
     index: 'index.html'
 }));
 
 // Photo Store at /photostore/
-app.use('/photostore', express.static(path.join(__dirname, 'photo store'), {
+app.use('/photostore', express.static(path.join(__dirname, 'frontend', 'photo-store-frontend'), {
     index: 'index.html'
 }));
 
-// Photo With AI at /photoai/ - serve separate HTML without PWA
-app.use('/photoai', express.static(path.join(__dirname, 'Photo with AI'), {
+// Photo With AI at /photoai/
+app.use('/photoai', express.static(path.join(__dirname, 'frontend', 'photo-ai-frontend'), {
     index: false // Disable automatic index serving
 }));
 
@@ -344,22 +337,24 @@ app.get('/photoai', (req, res) => {
     res.sendFile(path.join(__dirname, 'Photo with AI', 'index-hub.html'));
 });
 
+// AI Chat App at /ai-chat/
+app.use('/ai-chat', express.static(path.join(__dirname, 'frontend', 'ai-chat')));
+
+// SPA fallback for AI Chat
+app.get('/ai-chat/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'ai-chat', 'index.html'));
+});
+
 // SPA fallback for each app
-app.get('/quiz/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
-});
+app.get('/quiz/*', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'speedy-quiz', 'index.html')));
+app.get('/quran/*', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'quran-frontend', 'index.html')));
+app.get('/photostore/*', (req, res) => res.sendFile(path.join(__dirname, 'photo store', 'index.html')));
+app.get('/photoai/*', (req, res) => res.sendFile(path.join(__dirname, 'Photo with AI', 'index.html')));
 
-app.get('/quran/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Quran', 'QURAN-main', 'index.html'));
-});
-
-app.get('/photostore/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'photo store', 'index.html'));
-});
-
-app.get('/photoai/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Photo with AI', 'index.html'));
-});
+// Hub (root) - the main app selector - now AFTER app routes so they take priority
+app.use(express.static(__dirname, {
+    index: 'index.html'
+}));
 
 // SPA fallback for hub (root) - must be after all other routes
 app.get('*', (req, res) => {
@@ -401,7 +396,7 @@ let photoAIProcess;
 
 function startPhotoAIBackend() {
     console.log('Starting Photo with AI backend on port 9002...');
-    photoAIProcess = spawn('node', ['server.js'], {
+    photoAIProcess = spawn('node', ['ai-server/server.js'], {
         cwd: path.join(__dirname, 'Photo with AI'),
         shell: true
     });

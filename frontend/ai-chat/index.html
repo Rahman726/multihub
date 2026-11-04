@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chat ⚡</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body style="background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px; font-family: 'Segoe UI', system-ui, sans-serif;">
+
+  <div class="card" max-width: 600px; margin: 0 auto;">
+    <div style="text-align: center; padding: 20px 0;">
+      <h1>🤖 AI Chat</h1>
+      <p style="color: var(--muted);">Chat with AI (offline mode - no API key needed)</p>
+    </div>
+
+    <div style="height: 400px; background: var(--card); border-radius: 12px; padding: 20px; overflow-y: auto; margin-bottom: 20px; border: 1px solid #383d6e;">
+      <div id="chat-messages" style="height: 100%;">
+        <div style="text-align: center; color: var(--muted); padding: 20px;">
+          <strong>Welcome! 👋</strong><br />
+          Start by entering a topic or question below.
+        </div>
+      </div>
+    </div>
+
+    <div style="background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid #383d6e;">
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="Enter topic (e.g. science, history, math) or question..."
+          style="border: 1px solid #383d6e; border-radius: 8px; padding: 8px; background: var(--bg); color: var(--text); width: 100%;"
+          maxlength="100"
+        />
+        <button
+          id="send-btn"
+          style="background: #6366f1; color: white; border: none; border-radius: 8px; padding: 0 16px; font-size: 0.9rem; cursor: pointer;"
+        >
+          Send ➜
+        </button>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center; color: var(--muted);">
+      <p>📚 Powered by offline question bank - no API key needed!</p>
+      <p>Topics: general, space, sports, science, movies, music</p>
+    </div>
+
+  <script>
+    // Simple AI chat without API keys
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    // Predefined responses for different topics
+    const aiResponses = {
+      'science': '🔬 Science is the systematic study of structure and behavior of the physical and natural world through observation and experiment!',
+      'space': '🚀 Space is the boundless three-dimensional extent beyond Earth, including all planets, stars, galaxies, and other celestial bodies.',
+      'maths': '➗ Mathematics is the study of numbers, quantities, and shapes. It provides the foundation for all sciences and engineering.',
+      'history': '📜 History is the study of past events, particularly in human affairs. It helps us understand how societies have developed over time.',
+      'movies': '🎬 Movies are motion pictures used for entertainment, storytelling, or documentary purposes. They combine visuals, sound, and narrative.',
+      'music': '🎵 Music is the art of arranging sounds in time through melody, harmony, rhythm, and timbre. It expresses emotion and culture.',
+      'general': '💡 General knowledge covers a wide range of topics including science, history, geography, and culture.',
+      'default': "🤖 That's an interesting topic! I can help answer questions about science, space, math, history, movies, music, or general knowledge."
+    };
+
+    // Send message function
+    function sendMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      // Add user message
+      addMessage('user', text);
+      chatInput.value = '';
+
+      // Get topic and generate response
+      const topic = text.toLowerCase().trim();
+      let response = aiResponses['default'];
+
+      if (topic.includes('science')) response = aiResponses.science;
+      else if (topic.includes('space') || topic.includes('astronomy')) response = aiResponses.space;
+      else if (topic.includes('math') || topic.includes('mathematics')) response = aiResponses.maths;
+      else if (topic.includes('history')) response = aiResponses.history;
+      else if (topic.includes('movie') || topic.includes('films')) response = aiResponses.movies;
+      else if (topic.includes('music')) response = aiResponses.music;
+      else if (topic.includes('general')) response = aiResponses.general;
+
+      // Simulate typing delay
+      setTimeout(() => {
+        addMessage('ai', response);
+      }, 800);
+    }
+
+    // Add message to UI
+    function addMessage(sender, text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.style.marginBottom: 12px;
+      msgDiv.style.padding: 8px;
+      msgDiv.style.border-radius: 8px;
+      msgDiv.style.maxWidth: 80%;
+
+      if (sender === 'user') {
+        msgDiv.style.background: '#6366f1';
+        msgDiv.style.color: white;
+        msgDiv.style.marginLeft: auto;
+        msgDiv.style.textAlign: right;
+      } else {
+        msgDiv.style.background: var(--card);
+        msgDiv.style.color: var(--text);
+        msgDiv.style.marginRight: auto;
+        msgDiv.style.textAlign: left;
+      }
+
+      msgDiv.innerHTML = `<strong>${sender === 'user' ? 'You' : 'AI'}</strong>: ${text}`;
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Event listeners
+    sendBtn.addEventListener('click', sendMessage);
+
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    // Welcome message
+    setTimeout(() => {
+      addMessage('ai', '👋 Hello! I\'m an AI chat without needing any API keys. Try asking me about science, space, math, history, movies, or music!');
+    }, 500);
+  </script>
+
+</body>
+</html>
