@@ -1,0 +1,12 @@
+{
+  "name": "speedy-quiz",
+  "version": "1.0.0",
+  "description": "Fast-paced quiz game with Python backend",
+  "main": "index.html",
+  "scripts": {
+    "start": "python backend/main.py"
+  },
+  "keywords": ["quiz", "game", "speedy"],
+  "author": "",
+  "license": "MIT"
+}

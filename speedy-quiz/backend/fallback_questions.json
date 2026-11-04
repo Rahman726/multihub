@@ -1,0 +1,74 @@
+{
+  "general": [
+    {"question": "What is the capital of France?", "options": ["Berlin", "Madrid", "Paris", "Rome"], "answer": "Paris"},
+    {"question": "Which planet is known as the Red Planet?", "options": ["Venus", "Mars", "Jupiter", "Saturn"], "answer": "Mars"},
+    {"question": "How many continents are there on Earth?", "options": ["5", "6", "7", "8"], "answer": "7"},
+    {"question": "What gas do plants absorb from the atmosphere?", "options": ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"], "answer": "Carbon dioxide"},
+    {"question": "Which is the largest ocean on Earth?", "options": ["Atlantic", "Indian", "Arctic", "Pacific"], "answer": "Pacific"},
+    {"question": "Who wrote 'Romeo and Juliet'?", "options": ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"], "answer": "William Shakespeare"},
+    {"question": "What is the chemical symbol for gold?", "options": ["Ag", "Go", "Au", "Gd"], "answer": "Au"},
+    {"question": "How many sides does a hexagon have?", "options": ["5", "6", "7", "8"], "answer": "6"},
+    {"question": "What is the tallest animal in the world?", "options": ["Elephant", "Giraffe", "Ostrich", "Brown bear"], "answer": "Giraffe"},
+    {"question": "Which language is the most spoken as a first language?", "options": ["English", "Spanish", "Mandarin Chinese", "Hindi"], "answer": "Mandarin Chinese"},
+    {"question": "What does 'HTTP' stand for?", "options": ["HyperText Transfer Protocol", "High Transfer Text Protocol", "HyperTool Transfer Program", "HyperText Traffic Port"], "answer": "HyperText Transfer Protocol"},
+    {"question": "Which country has the largest land area?", "options": ["Canada", "China", "Russia", "USA"], "answer": "Russia"},
+    {"question": "What is the smallest prime number?", "options": ["0", "1", "2", "3"], "answer": "2"},
+    {"question": "Speed of light is approximately, in km per second:", "options": ["300,000", "100,000", "500,000", "1,000,000"], "answer": "300,000"},
+    {"question": "Which metal is liquid at room temperature?", "options": ["Mercury", "Lead", "Tin", "Aluminium"], "answer": "Mercury"},
+    {"question": "A polygon with 8 sides is called a:", "options": ["Heptagon", "Hexagon", "Octagon", "Nonagon"], "answer": "Octagon"},
+    {"question": "Which sport uses a shuttlecock?", "options": ["Tennis", "Badminton", "Squash", "Table tennis"], "answer": "Badminton"},
+    {"question": "The Great Wall is located in which country?", "options": ["Japan", "China", "Korea", "Mongolia"], "answer": "China"},
+    {"question": "How many minutes are in a full day?", "options": ["600", "1,200", "1,440", "2,400"], "answer": "1,440"},
+    {"question": "What is the hardest natural substance?", "options": ["Quartz", "Diamond", "Steel", "Granite"], "answer": "Diamond"}
+  ],
+  "space": [
+    {"question": "Which planet is closest to the Sun?", "options": ["Venus", "Mercury", "Earth", "Mars"], "answer": "Mercury"},
+    {"question": "Who was the first human in space?", "options": ["Neil Armstrong", "Yuri Gagarin", "Alan Shepard", "Buzz Aldrin"], "answer": "Yuri Gagarin"},
+    {"question": "What galaxy is Earth located in?", "options": ["Andromeda", "Milky Way", "Triangulum", "Sombrero"], "answer": "Milky Way"}
+  ],
+  "sports": [
+    {"question": "How many players are on a soccer team on the field?", "options": ["9", "10", "11", "12"], "answer": "11"},
+    {"question": "In which country did the Olympic Games originate?", "options": ["Italy", "Greece", "Egypt", "France"], "answer": "Greece"},
+    {"question": "How long is an Olympic swimming pool race 'individual medley'?", "options": ["100m", "200m", "400m", "800m"], "answer": "400m"}
+  ],
+  "movies": [
+    {"question": "Who directed the movie 'Jaws'?", "options": ["George Lucas", "Steven Spielberg", "James Cameron", "Alfred Hitchcock"], "answer": "Steven Spielberg"},
+    {"question": "Which movie features the character Jack Dawson?", "options": ["Titanic", "Inception", "Gladiator", "The Matrix"], "answer": "Titanic"}
+  ],
+  "music": [
+    {"question": "How many strings does a standard guitar have?", "options": ["4", "5", "6", "7"], "answer": "6"},
+    {"question": "Which instrument has 88 keys?", "options": ["Organ", "Piano", "Accordion", "Harpsichord"], "answer": "Piano"}
+  ],
+  "computer": [
+    {"question": "What does 'CPU' stand for?", "options": ["Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Control Processing Utility"], "answer": "Central Processing Unit"},
+    {"question": "Which company develops the Windows operating system?", "options": ["Apple", "Microsoft", "Google", "IBM"], "answer": "Microsoft"},
+    {"question": "Which device is mainly used to click and select items on screen?", "options": ["Keyboard", "Monitor", "Mouse", "Printer"], "answer": "Mouse"},
+    {"question": "What does 'WWW' stand for?", "options": ["World Wide Web", "Web Wide World", "Wide World Web", "World Web Wide"], "answer": "World Wide Web"},
+    {"question": "Which of these is a web browser?", "options": ["Firefox", "Linux", "Windows", "Python"], "answer": "Firefox"}
+  ],
+  "computer science": [
+    {"question": "What does RAM stand for?", "options": ["Random Access Memory", "Ready Access Module", "Run Active Memory", "Rapid Action Manager"], "answer": "Random Access Memory"},
+    {"question": "Which of these is a programming language?", "options": ["Python", "Django", "Linux", "Photoshop"], "answer": "Python"},
+    {"question": "What does a compiler do?", "options": ["Translates source code to machine code", "Stores data permanently", "Prints documents", "Browses the internet"], "answer": "Translates source code to machine code"},
+    {"question": "The two digits used in the binary system are:", "options": ["0 and 1", "1 and 2", "A and B", "X and Y"], "answer": "0 and 1"},
+    {"question": "An algorithm is best described as:", "options": ["A step-by-step set of instructions", "A type of computer screen", "An antivirus program", "A keyboard shortcut"], "answer": "A step-by-step set of instructions"}
+  ],
+  "maths": [
+    {"question": "What is 15% of 200?", "options": ["15", "20", "30", "45"], "answer": "30"},
+    {"question": "What is the area of a square with side length 5?", "options": ["10", "20", "25", "50"], "answer": "25"},
+    {"question": "What value of x makes 3x = 12 true?", "options": ["3", "4", "6", "12"], "answer": "4"},
+    {"question": "How many degrees do the angles of a triangle add up to?", "options": ["90", "180", "270", "360"], "answer": "180"},
+    {"question": "What is 7 squared?", "options": ["14", "42", "49", "63"], "answer": "49"}
+  ],
+  "history": [
+    {"question": "Who was the first President of the USA?", "options": ["George Washington", "Abraham Lincoln", "Thomas Jefferson", "John Adams"], "answer": "George Washington"},
+    {"question": "In which year did World War II end?", "options": ["1943", "1944", "1945", "1946"], "answer": "1945"},
+    {"question": "The pyramids of Giza are located in:", "options": ["Egypt", "Mexico", "Iraq", "Sudan"], "answer": "Egypt"},
+    {"question": "Which empire built the Colosseum?", "options": ["Greek", "Roman", "Ottoman", "Persian"], "answer": "Roman"}
+  ],
+  "science": [
+    {"question": "What is the most abundant gas in Earth's atmosphere?", "options": ["Oxygen", "Nitrogen", "Argon", "Carbon dioxide"], "answer": "Nitrogen"},
+    {"question": "Water freezes at what temperature in Celsius?", "options": ["0", "10", "32", "100"], "answer": "0"},
+    {"question": "Which blood type is known as the universal donor?", "options": ["A", "B", "AB", "O"], "answer": "O"}
+  ]
+}

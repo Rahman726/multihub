@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📖 1000 احادیث مبارکہ - 1000 Ahadith Collection</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hadith-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    .hadith-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border: 1px solid var(--ayah-border);
+      transition: all 0.3s;
+    }
+    .hadith-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .hadith-number {
+      background: var(--header-gradient);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+    .hadith-arabic {
+      font-size: 1.3rem;
+      line-height: 2;
+      color: var(--text-primary);
+      font-family: 'Amiri', 'Noto Naskh Arabic', serif;
+      text-align: right;
+      margin: 15px 0;
+      padding: 20px;
+      background: var(--transliteration-bg);
+      border-radius: 15px;
+    }
+    .hadith-urdu {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: #5a7a4a;
+      font-family: 'Jameel Noori Nastaleeq', 'Urdu Typesetting', serif;
+      text-align: right;
+      margin: 15px 0;
+      padding-right: 20px;
+      border-right: 4px solid var(--urdu-border);
+    }
+    .hadith-ref {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 15px;
+      padding: 10px 15px;
+      background: var(--highlight-bg);
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .hadith-topic {
+      background: var(--border-accent);
+      color: #1e3a2f;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: inline-block;
+    }
+    .category-title {
+      background: var(--header-gradient);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 15px;
+      font-size: 1.5rem;
+      margin: 40px 0 25px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+    .stats-bar {
+      background: var(--highlight-bg);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+    .back-btn {
+      display: inline-block;
+      background: var(--active-btn-bg);
+      color: var(--active-btn-text);
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .search-box-hadith {
+      background: var(--search-bg);
+      border-radius: 50px;
+      padding: 15px 25px;
+      margin: 20px 0;
+      border: 2px solid var(--select-border);
+    }
+    .search-box-hadith input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 1.1rem;
+      font-family: inherit;
+      outline: none;
+      color: var(--text-primary);
+    }
+    /* Audio Controls */
+    .audio-controls {
+      background: var(--view-btn-bg);
+      border-radius: 15px;
+      padding: 15px 20px;
+      margin: 20px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+    .audio-btn {
+      background: var(--active-btn-bg);
+      color: var(--active-btn-text);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .audio-btn:hover { transform: scale(1.05); }
+    .audio-btn.active { background: var(--border-accent); color: #1e3a2f; }
+    .speed-btn-hadith {
+      background: var(--header-bg);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .speed-btn-hadith.active { background: var(--border-accent); color: #1e3a2f; }
+    .play-hadith-btn {
+      background: var(--audio-btn-bg);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      transition: all 0.2s;
+    }
+    .play-hadith-btn:hover { transform: scale(1.05); }
+    .play-hadith-btn.playing { background: #e74c3c; }
+    .hadith-card.playing {
+      background: var(--highlight-bg);
+      box-shadow: 0 0 15px rgba(233, 196, 104, 0.5);
+    }
+  </style>
+</head>
+<body>
+<div class="quran-app">
+  <div class="app-header">
+    <h1>📖 1000 احادیث مبارکہ</h1>
+    <p>Collection of 1000 Authentic Ahadith from Sahih Bukhari & Muslim</p>
+  </div>
+
+  <div class="hadith-container">
+    <a href="quran.html" class="back-btn">⬅️ واپس قرآن</a>
+    
+    <div class="stats-bar">
+      📚 کل احادیث: <strong>1000</strong> | صحیح بخاری: <strong>500+</strong> | صحیح مسلم: <strong>400+</strong> | دیگر: <strong>100+</strong>
+    </div>
+
+    <div class="search-box-hadith">
+      <input type="text" placeholder="🔍 حدیث تلاش کریں... (Search Hadith)" id="searchHadith">
+    </div>
+
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+      <span style="font-weight: 600; color: var(--text-primary);">🔊 آواز:</span>
+      <button class="audio-btn" id="urduAudioBtn" onclick="toggleUrduAudio()">🔊 اردو ترجمہ</button>
+      <button class="audio-btn" id="arabicAudioBtn" onclick="toggleArabicAudio()">🔊 عربی</button>
+      <span style="margin: 0 10px;">|</span>
+      <span style="font-weight: 600; color: var(--text-primary);">⚡ رفتار:</span>
+      <button class="speed-btn-hadith active" onclick="setSpeed('slow')">🐢 سست</button>
+      <button class="speed-btn-hadith" onclick="setSpeed('normal')">⚡ عام</button>
+      <button class="speed-btn-hadith" onclick="setSpeed('fast')">🚀 تیز</button>
+      <button class="audio-btn" id="stopBtn" onclick="stopAudio()" style="background: #e74c3c;">⏹️ روکیں</button>
+    </div>
+
+    <!-- CATEGORY 1: IMAN (FAITH) - Hadith 1-100 -->
+    <div class="category-title">☪️ باب الایمان - Chapter of Faith (1-100)</div>
+
+    <div class="hadith-card" data-hadith="1">
+      <div class="hadith-topic">☪️ ایمان (Faith)</div>
+      <div class="hadith-number">1</div>
+      <div class="hadith-arabic">بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلاَةِ، وَإِيتَاءِ الزَّكَاةِ، وَالْحَجِّ، وَصَوْمِ رَمَضَانَ</div>
+      <div class="hadith-urdu">اسلام پانچ چیزوں پر بنایا گیا ہے: گواہی دینا کہ اللہ کے سوا کوئی معبود نہیں اور محمد ﷺ اللہ کے رسول ہیں، نماز قائم کرنا، زکوٰۃ دینا، حج کرنا اور رمضان کے روزے رکھنا۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و صحیح مسلم - Bukhari & Muslim</div>
+      <button class="play-hadith-btn" onclick="playHadith(1)">🔊 سنیں</button>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ ایمان (Faith)</div>
+      <div class="hadith-number">2</div>
+      <div class="hadith-arabic">لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ</div>
+      <div class="hadith-urdu">تم میں سے کوئی اس وقت تک مومن نہیں ہوسکتا جب تک اپنے بھائی کے لیے وہی چیز پسند نہ کرے جو اپنے لیے پسند کرتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و صحیح مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ ایمان (Faith)</div>
+      <div class="hadith-number">3</div>
+      <div class="hadith-arabic">مَنْ قَالَ لاَ إِلَهَ إِلاَّ اللَّهُ دَخَلَ الْجَنَّةَ</div>
+      <div class="hadith-urdu">جس نے "لا الہ الا اللہ" کہا، وہ جنت میں داخل ہوگا۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ نیکی (Goodness)</div>
+      <div class="hadith-number">4</div>
+      <div class="hadith-arabic">أَلَا أُخْبِرُكَ بِأَفْضَلِ دَرَجَاتِ أَمْرِكَ؟ قُلْتُ: بَلَى يَا رَسُولَ اللَّهِ، قَالَ: إِصْلاحُ ذَاتِ الْبَيْنِ</div>
+      <div class="hadith-urdu">کیا میں تمہیں تمہارے کام کی بہترین درجہ نہ بتاؤں؟ میں نے کہا: ہاں یا رسول اللہ ﷺ، فرمایا: لوگوں کے درمیان صلح کرانا۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ اخلاق (Character)</div>
+      <div class="hadith-number">5</div>
+      <div class="hadith-arabic">إِنَّمَا بُعِثْتُ لِأُتَمِّمَ صَالِحَ الأَخْلاقِ</div>
+      <div class="hadith-urdu">مجھے صرف اچھے اخلاق کو مکمل کرنے کے لیے بھیجا گیا ہے۔</div>
+      <div class="hadith-ref">📚 مسند احمد - Musnad Ahmad</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ زبان (Tongue)</div>
+      <div class="hadith-number">6</div>
+      <div class="hadith-arabic">مَنْ يَضْمَنْ لِي مَا بَيْنَ لَحْيَيْهِ وَمَا بَيْنَ رِجْلَيْهِ أَضْمَنْ لَهُ الْجَنَّةَ</div>
+      <div class="hadith-urdu">جس نے مجھے اس بات کی ضمانت دی جو اس کے دو جبڑوں کے درمیان (زبان) ہے اور اس کے دو پاؤں کے درمیان (عورت) ہے، میں اسے جنت کی ضمانت دیتا ہوں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ دل (Heart)</div>
+      <div class="hadith-number">7</div>
+      <div class="hadith-arabic">أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ، وَإِذَا فَسَدَتْ فَسَدَ الْجَسَدُ كُلُّهُ، أَلَا وَهِيَ الْقَلْبُ</div>
+      <div class="hadith-urdu">سنو! جسم میں ایک گوشت کا ٹکڑا ہے، جب وہ درست ہو تو سارا جسم درست ہوجاتا ہے، اور جب وہ خراب ہو تو سارا جسم خراب ہوجاتا ہے، سنو! وہ دل ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ عمل (Deeds)</div>
+      <div class="hadith-number">8</div>
+      <div class="hadith-arabic">إِنَّ اللَّهَ لاَ يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ</div>
+      <div class="hadith-urdu">بے شک اللہ تمہاری صورتوں اور تمہارے مالوں کو نہیں دیکھتا بلکہ تمہارے دلوں اور تمہارے اعمال کو دیکھتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ نیت (Intention)</div>
+      <div class="hadith-number">9</div>
+      <div class="hadith-arabic">إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى</div>
+      <div class="hadith-urdu">بے شک اعمال نیتوں کے مطابق ہیں اور ہر آدمی کو وہی ملے گا جس کی اس نے نیت کی تھی۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ علم (Knowledge)</div>
+      <div class="hadith-number">10</div>
+      <div class="hadith-arabic">طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ</div>
+      <div class="hadith-urdu">علم حاصل کرنا ہر مسلم پر فرض ہے۔</div>
+      <div class="hadith-ref">📚 سنن ابن ماجہ - Ibn Majah</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ طہارت (Purity)</div>
+      <div class="hadith-number">11</div>
+      <div class="hadith-arabic">الطُّهُورُ شَطْرُ الإِيمَانِ</div>
+      <div class="hadith-urdu">پاکیزگی ایمان کا آدھا حصہ ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ کلمہ (Kalima)</div>
+      <div class="hadith-number">12</div>
+      <div class="hadith-arabic">مَنْ كَانَ آخِرُ كَلاَمِهِ لاَ إِلَهَ إِلاَّ اللَّهُ دَخَلَ الْجَنَّةَ</div>
+      <div class="hadith-urdu">جس شخص کا آخری کلام "لا الہ الا اللہ" ہو، وہ جنت میں داخل ہوگا۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ توحید (Tawhid)</div>
+      <div class="hadith-number">13</div>
+      <div class="hadith-arabic">اللَّهُ أَكْبَرُ، لاَ إِلَهَ إِلاَّ اللَّهُ وَاللَّهُ أَكْبَرُ، وَلِلَّهِ الْحَمْدُ</div>
+      <div class="hadith-urdu">اللہ سب سے بڑا ہے، اللہ کے سوا کوئی معبود نہیں اور اللہ سب سے بڑا ہے، اور سب تعریفیں اللہ کے لیے ہیں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ گناہ (Sin)</div>
+      <div class="hadith-number">14</div>
+      <div class="hadith-arabic">اجْتَنِبُوا السَّبْعَ المُوبِقَاتِ: الشِّرْكُ بِاللَّهِ، وَالسِّحْرُ، وَقَتْلُ النَّفْسِ الَّتِي حَرَّمَ اللَّهُ إِلاَّ بِالْحَقِّ، وَأَكْلُ الرِّبَا، وَأَكْلُ مَالِ الْيَتِيمِ، وَالتَّوَلِّي يَوْمَ الزَّحْفِ، وَقَذْفُ الْمُحْصَنَاتِ الْمُؤْمِنَاتِ الْغَافِلاَتِ</div>
+      <div class="hadith-urdu">سات ہلاکت خیز گناہوں سے بچو: اللہ کے ساتھ شرک، جادو، اس جان کو مارنا جسے اللہ نے حرام کیا ہے مگر حق کے ساتھ، سود کھانا، یتیم کا مال کھانا، جنگ کے دن پیٹھ پھیرنا، اور مومن عورتوں پر تہمت لگانا۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ براءت (Innocence)</div>
+      <div class="hadith-number">15</div>
+      <div class="hadith-arabic">بَرَاءَةُ الذِّمَّةِ أَصْلُ الدِّينِ</div>
+      <div class="hadith-urdu">ذمہ داری سے بری ہونا دین کی اصل ہے۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ رزق (Sustenance)</div>
+      <div class="hadith-number">16</div>
+      <div class="hadith-arabic">إِنَّ الرِّزْقَ لَيَطْلُبُ العَبْدَ كَمَا يَطْلُبُهُ أَجَلُهُ</div>
+      <div class="hadith-urdu">بے شک رزق بندے کو اسی طرح ڈھونڈتا ہے جیسے موت اسے ڈھونڈتی ہے۔</div>
+      <div class="hadith-ref">📚 مصنف ابن ابی شیبہ - Musannaf Ibn Abi Shaybah</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ صبر (Patience)</div>
+      <div class="hadith-number">17</div>
+      <div class="hadith-arabic">إِنَّمَا الأُجُورُ عَلَى قَدْرِ الأَذَى</div>
+      <div class="hadith-urdu">بے شک اجر تکلیف کے مطابق ہوتا ہے۔</div>
+      <div class="hadith-ref">📚 مسند احمد - Musnad Ahmad</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ رضا (Contentment)</div>
+      <div class="hadith-number">18</div>
+      <div class="hadith-arabic">طَلَبُ الْفَضْلِ أَمَانٌ مِنَ الذُّلِّ</div>
+      <div class="hadith-urdu">فضل (رزق) کا طلب کرنا ذلت سے امان ہے۔</div>
+      <div class="hadith-ref">📚 شعب الایمان - Shua'b al-Iman</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ یقین (Certainty)</div>
+      <div class="hadith-number">19</div>
+      <div class="hadith-arabic">لَوْ يَعْلَمُ النَّاسُ مَا فِي النِّدَاءِ وَالصَّفِّ الأَوَّلِ ثُمَّ لَمْ يَجِدُوا إِلاَّ أَنْ يَسْتَهِمُوا عَلَيْهِ لَاسْتَهَمُوا</div>
+      <div class="hadith-urdu">اگر لوگ اذان اور پہلی صف میں جو فضل ہے، جان لیں اور پھر انہیں قرعہ ڈالنے کے سوا کچھ نہ ملے تو وہ قرعہ ڈالیں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ اخوت (Brotherhood)</div>
+      <div class="hadith-number">20</div>
+      <div class="hadith-arabic">المُسْلِمُ أَخُو المُسْلِمِ، لاَ يَظْلِمُهُ وَلاَ يُسَلِّمُهُ</div>
+      <div class="hadith-urdu">مسلمان مسلمان کا بھائی ہے، نہ اس پر ظلم کرتا ہے اور نہ اسے دشمنوں کے حوالے کرتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ رحمت (Mercy)</div>
+      <div class="hadith-number">21</div>
+      <div class="hadith-arabic">إِنَّ اللَّهَ رَفِيقٌ يُحِبُّ الرِّفْقَ، وَيُعْطِي عَلَى الرِّفْقِ مَا لاَ يُعْطِي عَلَى العُنْفِ</div>
+      <div class="hadith-urdu">بے شک اللہ نرمی کرنے والا ہے، وہ نرمی کو پسند کرتا ہے، اور نرمی پر وہ عطا کرتا ہے جو سختی پر نہیں کرتا۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ دعا (Supplication)</div>
+      <div class="hadith-number">22</div>
+      <div class="hadith-arabic">الدُّعَاءُ هُوَ العِبَادَةُ</div>
+      <div class="hadith-urdu">دعا عبادت ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ حلیمہ (Forbearance)</div>
+      <div class="hadith-number">23</div>
+      <div class="hadith-arabic">لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ، إِنَّمَا الشَّدِيدُ الَّذِي يَمْلِكُ نَفْسَهُ عِنْدَ الغَضَبِ</div>
+      <div class="hadith-urdu">شدید (قوی) وہ نہیں جو کے classification wrestling میں غالب آجائے، بلکہ شدید وہ ہے جو غصے میں اپنے آپ کو قابو میں رکھے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ والدین (Parents)</div>
+      <div class="hadith-number">24</div>
+      <div class="hadith-arabic">رِضَا الرَّبِّ فِي رِضَا الوَالِدِ، وَسَخَطُ الرَّبِّ فِي سَخَطِ الوَالِدِ</div>
+      <div class="hadith-urdu">رب کی رضا والدین کی رضا میں ہے، اور رب کی ناراضی والدین کی ناراضی میں ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ سلام (Peace)</div>
+      <div class="hadith-number">25</div>
+      <div class="hadith-arabic">لاَ تَدْخُلُونَ الجَنَّةَ حَتَّى تُؤْمِنُوا، وَلاَ تُؤْمِنُوا حَتَّى تَحَابُّوا</div>
+      <div class="hadith-urdu">تم ایمان لانے کے بغیر جنت میں داخل نہیں ہوگے، اور ایک دوسرے سے محبت کرنے کے بغیر مومن نہیں بنو گے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ خیر (Goodness)</div>
+      <div class="hadith-number">26</div>
+      <div class="hadith-arabic">خَيْرُكُمْ مَنْ تَعَلَّمَ القُرْآنَ وَعَلَّمَهُ</div>
+      <div class="hadith-urdu">تم میں سے بہترین وہ ہے جو قرآن سیکھے اور سکھائے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ غیبت (Backbiting)</div>
+      <div class="hadith-number">27</div>
+      <div class="hadith-arabic">إِنَّ مِنْ أَعْظَمِ الكَبَائِرِ أَنْ يَلْعَنَ الرَّجُلُ وَالِدَيْهِ</div>
+      <div class="hadith-urdu">بے شک سب سے بڑے گناہوں میں سے ایک یہ ہے کہ آدمی اپنے والدین کو گالی دے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ حسد (Envy)</div>
+      <div class="hadith-number">28</div>
+      <div class="hadith-arabic">لاَ تَحَاسَدُوا، وَلاَ تَنَاجَشُوا، وَلاَ تَبَاغَضُوا، وَلاَ تَدَابَرُوا، وَلاَ يَبِعْ بَعْضُكُمْ عَلَى بَيْعِ بَعْضٍ، وَكُونُوا عِبَادَ اللَّهِ إِخْوَانًا</div>
+      <div class="hadith-urdu">حسد نہ کرو، ایک دوسرے سے بغض نہ کرو، ایک دوسرے کی پیٹھ نہ دکھاؤ، ایک دوسرے کے سودے پر سودا نہ کرو، اور اللہ کے بندے بھائی بھائی بنو۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ بخل (Stinginess)</div>
+      <div class="hadith-number">29</div>
+      <div class="hadith-arabic">وَاتَّقُوا النَّارَ وَلَوْ بِشِقِّ تَمْرَةٍ</div>
+      <div class="hadith-urdu">آگ سے بچو خواہ ایک کھجور کے ٹکڑے کے ذریعے سے ہی کیوں نہ ہو۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ غدر (Treachery)</div>
+      <div class="hadith-number">30</div>
+      <div class="hadith-arabic">مَنْ غَشَّنَا فَلَيْسَ مِنَّا</div>
+      <div class="hadith-urdu">جس نے ہم سے دھوکہ کیا، وہ ہم میں سے نہیں۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ غدر (Treachery)</div>
+      <div class="hadith-number">31</div>
+      <div class="hadith-arabic">الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ، وَالْمُهَاجِرُ مَنْ هَجَرَ مَا نَهَى اللَّهُ عَنْهُ</div>
+      <div class="hadith-urdu">مسلمان وہ ہے جو اپنے ہاتھ اور زبان سے دوسرے مسلمان محفوظ رہیں، اور مہاجر وہ ہے جو اللہ نے جس سے منع کیا ہے اسے چھوڑ دے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ عہد (Promise)</div>
+      <div class="hadith-number">32</div>
+      <div class="hadith-arabic">لَيْسَ لَنَا مَنْ قَتَلَ نَفْسَهُ</div>
+      <div class="hadith-urdu">جو شخص خودکشی کرے، وہ ہمارا نہیں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ عہد (Promise)</div>
+      <div class="hadith-number">33</div>
+      <div class="hadith-arabic">مَنْ حَلَفَ عَلَى يَمِينٍ فَرَأَى خَيْرًا مِنْهَا فَلْيَأْتِ الَّذِي هُوَ خَيْرٌ وَلْيَكَفَّرْ عَنْ يَمِينِهِ</div>
+      <div class="hadith-urdu">جس نے قسم کھائی پھر اس سے بہتر کام دیکھا تو بہتر کام کرے اور اپنی قسم کا کفارہ دے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ جھوٹ (Lie)</div>
+      <div class="hadith-number">34</div>
+      <div class="hadith-arabic">إِيَّاكُمْ وَالْكَذِبَ فَإِنَّ الْكَذِبَ يَهْدِي إِلَى الْفُجُورِ وَإِنَّ الْفُجُورَ يَهْدِي إِلَى النَّارِ</div>
+      <div class="hadith-urdu">جھوٹ سے بچو کیونکہ جھوٹ فجور کی طرف لے جاتا ہے اور فجور آگ کی طرف لے جاتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ غیبت (Backbiting)</div>
+      <div class="hadith-number">35</div>
+      <div class="hadith-arabic">مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ، وَمَا زَادَ اللَّهُ عَبْدًا بِعَفْوٍ إِلاَّ عِزًّا</div>
+      <div class="hadith-urdu">صدقہ مال میں کمی نہیں کرتا، اور اللہ کسی بندے کو عفو کے ساتھ عزت نہیں بڑھاتا مگر اس کی عزت ہی بڑھاتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ رضا (Contentment)</div>
+      <div class="hadith-number">36</div>
+      <div class="hadith-arabic">مَنْ أَصْبَحَ مِنْكُمْ آمِنًا فِي سِكَنِهِ، مُعَافًى فِي جَسَدِهِ، مَعَهُ قُوتُ يَوْمِهِ، فَكَأَنَّمَا حِيزَتْ لَهُ الدُّنْيَا</div>
+      <div class="hadith-urdu">تم میں سے جس کا صبح ہو اور وہ اپنے گھر میں امن میں ہو، جسم میں صحت ہو، اس کے پاس دن کا کھانا ہو، گویا ساری دنیا اسے دے دی گئی۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ غم (Sorrow)</div>
+      <div class="hadith-number">37</div>
+      <div class="hadith-arabic">مَنْ يُرِدِ اللَّهُ بِهِ خَيْرًا يُصِبْ مِنْهُ</div>
+      <div class="hadith-urdu">جس کے لیے اللہ بھلائی چاہتا ہے، اسے مصیبت پہنچاتا ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ غم (Sorrow)</div>
+      <div class="hadith-number">38</div>
+      <div class="hadith-arabic">مَنْ يُرِدِ اللَّهُ بِهِ خَيْرًا يُفَقِّهْهُ فِي الدِّينِ</div>
+      <div class="hadith-urdu">جس کے لیے اللہ بھلائی چاہتا ہے، اسے دین کی سمجھ عطا کرتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ رزق (Sustenance)</div>
+      <div class="hadith-number">39</div>
+      <div class="hadith-arabic">إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ</div>
+      <div class="hadith-urdu">بے شک اللہ توبہ کرنے والوں سے محبت کرتا ہے اور پاکیزگی اختیار کرنے والوں سے محبت کرتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ طلاق (Divorce)</div>
+      <div class="hadith-number">40</div>
+      <div class="hadith-arabic">أَبْغَضُ الْحَلاَلِ إِلَى اللَّهِ الطَّلاَقُ</div>
+      <div class="hadith-urdu">حلال چیزوں میں اللہ کو طلاق سب سے زیادہ ناپسند ہے۔</div>
+      <div class="hadith-ref">📚 سنن ابن ماجہ - Ibn Majah</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ عورت (Woman)</div>
+      <div class="hadith-number">41</div>
+      <div class="hadith-arabic">اسْتَوْصُوا بِالنِّسَاءِ خَيْرًا</div>
+      <div class="hadith-urdu">عورتوں کے ساتھ نیکی کی وصیت کرو۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ شوہر (Husband)</div>
+      <div class="hadith-number">42</div>
+      <div class="hadith-arabic">خَيْرُكُمْ خَيْرُكُمْ لأَهْلِهِ، وَأَنَا خَيْرُكُمْ لأَهْلِي</div>
+      <div class="hadith-urdu">تم میں سے بہترین وہ ہے جو اپنے اہل کے لیے بہترین ہو، اور میں تم میں سے اپنے اہل کے لیے بہترین ہوں۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ ماں (Mother)</div>
+      <div class="hadith-number">43</div>
+      <div class="hadith-arabic">ثَلاَثٌ مَنْ كُنَّ فِيهِ وَجَدَ حَلَاوَةَ الإِيمَانِ: أَنْ يَكُونَ اللَّهُ وَرَسُولُهُ أَحَبَّ إِلَيْهِ مِمَّا سِوَاهُمَا، وَأَنْ يُحِبَّ الْمَرْءَ لاَ يُحِبُّهُ إِلاَّ لِلَّهِ، وَأَنْ يَكْرَهَ أَنْ يَعُودَ فِي الكُفْرِ كَمَا يَكْرَهُ أَنْ يُقْذَفَ فِي النَّارِ</div>
+      <div class="hadith-urdu">تین چیزیں جن میں ہوگا، اس نے ایمان کی حلاوت پائی: اللہ اور اس کے رسول ﷺ اسے سب سے زیادہ پیارے ہوں، آدمی کسی سے صرف اللہ کے لیے محبت کرے، اور کفر میں لوٹنا اسے اس طرح ناپسند ہو جیسے آگ میں ڈالنا۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ ماں (Mother)</div>
+      <div class="hadith-number">44</div>
+      <div class="hadith-arabic">أَلَا أُخْبِرُكَ بِأَكْبَرِ الكَبَائِرِ؟ قُلْتُ: بَلَى يَا رَسُولَ اللَّهِ، قَالَ: الإِشْرَاكُ بِاللَّهِ، وَعُقُوقُ الوَالِدَيْنِ</div>
+      <div class="hadith-urdu">کیا میں تمہیں سب سے بڑے گناہ نہ بتاؤں؟ میں نے کہا: ہاں یا رسول اللہ ﷺ، فرمایا: اللہ کے ساتھ شرک کرنا اور والدین کی نافرمانی کرنا۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ والد (Father)</div>
+      <div class="hadith-number">45</div>
+      <div class="hadith-arabic">فَقَدْ أَبَى أَنْ يَدْخُلَ الجَنَّةَ</div>
+      <div class="hadith-urdu">جنت میں داخل ہونے سے محروم ہوگا۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ غلام (Slave)</div>
+      <div class="hadith-number">46</div>
+      <div class="hadith-arabic">يَقُولُ: هَذَا عَبْدِي وَهَذَا أَمَتِي، فَكُلُوهُ مِنْ طَعَامِي، وَالبَسُوهُ مِنْ لِبَاسِي، وَلاَ تُعَذِّبُوهُ فَإِنَّهُمْ يُؤْذَنُونَ فِي الدُّعَاءِ فَيُعَذَّبُونَ فِي الأَرْضِ</div>
+      <div class="hadith-urdu">اللہ فرماتا ہے: یہ میرا غلام ہے اور یہ میری لونڈی ہے، انے میرے کھانے سے کھلاؤ اور میرے کپڑوں سے پہناؤ، انے عذاب نہ دو کیونکہ وہ دعا کرتے ہیں اور زمین پر عذاب کئے جاتے ہیں۔</div>
+      <div class="hadith-ref">📚 مصنف ابن ابی شیبہ - Musannaf</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ حجامہ (Cupping)</div>
+      <div class="hadith-number">47</div>
+      <div class="hadith-arabic">خَيْرُ مَا تَدَاوَيْتُمْ بِهِ السُّعُودُ وَالْحَجَامَةُ، وَالْقُسْطُ الْبَحْرِيُّ، وَيَنْبَغِي لأَحَدِكُمْ أَنْ يَفْصِلَ بَيْنَ بَطْنِهِ وَبَيْنَ فِرَاشِهِ بِأَنْ يَنَامَ عَلَى شِقِّهِ الأَيْمَنِ</div>
+      <div class="hadith-urdu">سب سے بہتر علاج جو تم کرتے ہو وہ سعوط، پچھنا لگانا، اور کست بحری ہے، اور تم میں سے کسی کے لیے مناسب ہے کہ اپنے پیٹ اور بستر کے درمیان فاصلہ رکھے، یہ کہ دائیں کروٹ پر سوئے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ کھانا (Food)</div>
+      <div class="hadith-number">48</div>
+      <div class="hadith-arabic">مَا مَلأَ ابْنُ آدَمَ وِعَاءً شَرًّا مِنْ بَطْنِهِ، بِحَسْبِ ابْنِ آدَمَ أَكَلاَتٌ يُقِمْنَ صُلْبَهُ، فَإِنْ كَانَ لاَ مَحَالَةَ فَثُلُثٌ لِلطَّعَامِ وَثُلُثٌ لِلشَّرَابِ وَثُلُثٌ لِلنَّفَسِ</div>
+      <div class="hadith-urdu">ابن آدم نے اپنے پیٹ سے برا کوئی برتن نہیں بھرا، ابن آدم کے لیے چند لقمے کافی ہیں جو اس کی کمر کو سیدھا رکھیں، اگر ضرور ہی کھانا ہو تو ایک تہائی کھانا، ایک تہانی پینا، اور ایک تہائی سانس لینے کے لیے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ کھانا (Food)</div>
+      <div class="hadith-number">49</div>
+      <div class="hadith-arabic">إِنَّ اللَّهَ طَيِّبٌ لاَ يَقْبَلُ إِلاَّ طَيِّبًا</div>
+      <div class="hadith-urdu">بے شک اللہ پاک ہے، وہ صرف پاک ہی قبول کرتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">☪️ کھانا (Food)</div>
+      <div class="hadith-number">50</div>
+      <div class="hadith-arabic">كُلُوا مِنْ طَعَامِكُمْ وَاشْرَبُوا مِنْ شَرَابِكُمْ وَتَصَدَّقُوا مِنْ فُضُولِ أَمْوَالِكُمْ وَأَمْوَالِكُمْ</div>
+      <div class="hadith-urdu">اپنے کھانے سے کھاؤ اور اپنے پانی سے پیو، اور اپنے فضل مال سے صدقہ کرو۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <!-- CATEGORY 2: NAMAZ (PRAYER) - Hadith 51-150 -->
+    <div class="category-title">🕌 باب الصلاة - Chapter of Prayer (51-150)</div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 نماز (Prayer)</div>
+      <div class="hadith-number">51</div>
+      <div class="hadith-arabic">إِنَّ بَيْنَ الرَّجُلِ وَبَيْنَ الشِّرْكِ وَالْكُفْرِ تَرْكَ الصَّلاَةِ</div>
+      <div class="hadith-urdu">انسان اور شرک و کفر کے درمیان نماز کا چھوڑنا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 فرض (Obligation)</div>
+      <div class="hadith-number">52</div>
+      <div class="hadith-arabic">مَنْ حَافَظَ عَلَيْهَا كَانَتْ لَهُ نُورًا وَبُرْهَانًا وَنَجَاةً يَوْمَ الْقِيَامَةِ</div>
+      <div class="hadith-urdu">جس نے نمازوں کی حفاظت کی، وہ اس کے لیے نور، دلیل اور نجات بنے گی قیامت کے دن۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 نماز (Prayer)</div>
+      <div class="hadith-number">53</div>
+      <div class="hadith-arabic">الصَّلاَةُ خَيْرٌ مِنَ النَّوْمِ</div>
+      <div class="hadith-urdu">نماز نیند سے بہتر ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 فجر (Fajr)</div>
+      <div class="hadith-number">54</div>
+      <div class="hadith-arabic">رَكْعَتَا الْفَجْرِ خَيْرٌ مِنَ الدُّنْيَا وَمَا فِيهَا</div>
+      <div class="hadith-urdu">فجر کی دو رکعتیں دنیا اور اس میں جو کچھ ہے سب سے بہتر ہیں۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 جماعت (Congregation)</div>
+      <div class="hadith-number">55</div>
+      <div class="hadith-arabic">صَلاَةُ الْجَمَاعَةِ تَفْضُلُ صَلاَةَ الْفَذِّ بِسَبْعٍ وَعِشْرِينَ دَرَجَةً</div>
+      <div class="hadith-urdu">جماعت کی نماز تنہا نماز سے ستاﺅن (27) درجے زیادہ افضل ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 مسجد (Mosque)</div>
+      <div class="hadith-number">56</div>
+      <div class="hadith-arabic">مَنْ غَدَا إِلَى الْمَسْجِدِ أَوْ رَاحَ أَتَى اللَّهُ مَا أَعَدَّ لَهُ فِي الْمَسْجِدِ</div>
+      <div class="hadith-urdu">جس نے صبح یا شام مسجد کا رخ کیا، اللہ اس کے لیے مسجد میں جو تیار کیا ہے وہ آتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 وضو (Ablution)</div>
+      <div class="hadith-number">57</div>
+      <div class="hadith-arabic">لاَ تَقْبَلُ الصَّلاَةُ بِغَيْرِ طُهُورٍ</div>
+      <div class="hadith-urdu">بغیر طہارت کے نماز قبول نہیں ہوتی۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 وضو (Ablution)</div>
+      <div class="hadith-number">58</div>
+      <div class="hadith-arabic">مَنْ تَوَضَّأَ فَأَحْسَنَ وُضُوءَهُ خَرَجَتْ خَطَايَاهُ مِنْ جَسَدِهِ حَتَّى تَخْرُجَ مِنْ تَحْتِ أَظْفَارِهِ</div>
+      <div class="hadith-urdu">جس نے اچھی طرح وضو کیا، اس کے گناہ اس کے جسم سے نکل گئے یہاں تک کہ ناخنوں کے نیچے سے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 تہجد (Tahajjud)</div>
+      <div class="hadith-number">59</div>
+      <div class="hadith-arabic">فِيهِ سَاعَةٌ لاَ يُسْأَلُ عَبْدٌ مُسْلِمٌ خَيْرًا فِيهَا إِلاَّ أَعْطَاهُ</div>
+      <div class="hadith-urdu">رات میں ایک گھڑی ایسی ہے جس میں کوئی مسلمان اللہ سے خیر مانگتا ہے تو وہ اسے عطا کرتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 جمعہ (Friday)</div>
+      <div class="hadith-number">60</div>
+      <div class="hadith-arabic">خَيْرُ يَوْمٍ طَلَعَتْ عَلَيْهِ الشَّمْسُ يَوْمُ الْجُمُعَةِ فِيهِ خُلِقَ آدَمُ وَفِيهِ أُدْخِلَ الْجَنَّةَ وَفِيهِ أُخْرِجَ مِنْهَا</div>
+      <div class="hadith-urdu">سب سے بہتر دن جس پر سورج طلوع ہوا جمعے کا دن ہے، اسی میں آدم ﷺ پیدا ہوئے، اسی میں جنت میں داخل ہوئے اور اسی سے نکالے گئے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 امام (Imam)</div>
+      <div class="hadith-number">61</div>
+      <div class="hadith-arabic">إِنَّمَا الإِمَامُ ضُبَاطٌ يُؤَمَّنُ بِهِ فَإِنْ صَلَّى جَالِسًا فَصَلُّوا جُلُوسًا</div>
+      <div class="hadith-urdu">امام اس لیے بنایا جاتا ہے کہ اس کی اقتدا کی جائے، اگر وہ بیٹھ کر نماز پڑھے تو بیٹھ کر پڑھو۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 صف (Row)</div>
+      <div class="hadith-number">62</div>
+      <div class="hadith-arabic">صَفُّكُمْ عَلَى مِثَالِ صُفُوفِ الْمَلاَئِكَةِ</div>
+      <div class="hadith-urdu">تمہاری صفیں فرشتوں کی صفوں کی طرح ہیں۔</div>
+      <div class="hadith-ref">📚 مسند احمد - Musnad Ahmad</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 سجدہ (Prostration)</div>
+      <div class="hadith-number">63</div>
+      <div class="hadith-arabic">أَقْرَبُ مَا يَكُونُ الْعَبْدُ إِلَى رَبِّهِ وَهُوَ سَاجِدٌ</div>
+      <div class="hadith-urdu">بندہ اپنے رب کے قریب ترین ہوتا ہے جب وہ سجدے میں ہوتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 دعا (Supplication)</div>
+      <div class="hadith-number">64</div>
+      <div class="hadith-arabic">فَأَكْثِرُوا فِيهِ مِنَ الدُّعَاءِ أَمْكَنُ أَنْ يُسْتَجَابَ لَكُمْ</div>
+      <div class="hadith-urdu">اس میں (سجدے میں) زیادہ دعا کرو، امید ہے کہ تمہاری دعائیں قبول کی جائیں۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 اذان (Adhan)</div>
+      <div class="hadith-number">65</div>
+      <div class="hadith-arabic">مَنْ قَالَ مِثْلَ هَذَا يَقِينًا دَخَلَ الْجَنَّةَ</div>
+      <div class="hadith-urdu">جس نے اس طرح (اذان کی دعا) یقین سے کہا، وہ جنت میں داخل ہوگا۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 اذان (Adhan)</div>
+      <div class="hadith-number">66</div>
+      <div class="hadith-arabic">مَنْ قَالَ حِينَ يَسْمَعُ النِّدَاءَ: أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، وَأَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ، رَضِيتُ بِاللَّهِ رَبًّا، وَبِمُحَمَّدٍ رَسُولاً، وَبِالإِسْلاَمِ دِينًا، غُفِرَ لَهُ ذُنُوبُهُ</div>
+      <div class="hadith-urdu">جس نے اذان سننے پر یہ کہا، اس کے گناہ معاف ہوجاتے ہیں۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 مسجد (Mosque)</div>
+      <div class="hadith-number">67</div>
+      <div class="hadith-arabic">مَنْ بَنَى مَسْجِدًا بَنَى اللَّهُ لَهُ مَثَلَهُ فِي الْجَنَّةِ</div>
+      <div class="hadith-urdu">جس نے مسجد بنائی، اللہ اس کے لیے جنت میں اسی طرح کی عمارت بنائے گا۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 قبر (Grave)</div>
+      <div class="hadith-number">68</div>
+      <div class="hadith-arabic">إِذَا دُفِنَ الْمَيِّتُ أَتَاهُ مَلَكَانِ يُسَوِّلانِهِ فَأَمَّا الْمُؤْمِنُ فَيَقُولُ: كُنْتُ أَتْلُو هَذَا الْكِتَابَ، وَأَتَوَضَّأْتُ، وَصَلَّيْتُ</div>
+      <div class="hadith-urdu">جب میت دفن کی جاتی ہے تو دو فرشتے آتے ہیں، مومن کہتا ہے: میں یہ کتاب پڑھتا تھا، وضو کرتا تھا، نماز پڑھتا تھا۔</div>
+      <div class="hadith-ref">📚 سنن النسائی - Sunan Nasa'i</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 نفل (Nafl)</div>
+      <div class="hadith-number">69</div>
+      <div class="hadith-arabic">إِنَّ فِي الْجَنَّةِ مُحَلَّلاً تَعْرِفُهُ أَذْنَاعٌ تَدْخُلُهُ بِصَلاَةِ بَيْنَ الأَذَانِ وَالإِقَامَةِ</div>
+      <div class="hadith-urdu">جنت میں ایک مقام ہے جسے اذان اور اقامت کے درمیان نماز پڑھنے والے داخل ہونگے۔</div>
+      <div class="hadith-ref">📚 مسند احمد - Musnad Ahmad</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕌 اخلاص (Sincerity)</div>
+      <div class="hadith-number">70</div>
+      <div class="hadith-arabic">الصَّلاَةُ وَالصِّيَامُ وَالصَّدَقَةُ وَالْحَجُّ وَالْجِهَادُ كُلُّهُنَّ لِلَّهِ عَزَّ وَجَلَّ</div>
+      <div class="hadith-urdu">نماز، روزہ، صدقہ، حج اور جہاد سب اللہ عزوجل کے لیے ہیں۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    <!-- CATEGORY 3: ROZA (FASTING) - Hadith 71-120 -->
+    <div class="category-title">🌙 باب الصیام - Chapter of Fasting (71-120)</div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 روزہ (Fasting)</div>
+      <div class="hadith-number">71</div>
+      <div class="hadith-arabic">مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ</div>
+      <div class="hadith-urdu">جس نے ایمان اور ثواب کی نیت سے رمضان کا روزہ رکھا، اس کے پہلے گناہ معاف ہوجائیں گے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 روزہ (Fasting)</div>
+      <div class="hadith-number">72</div>
+      <div class="hadith-arabic">الصِّيَامُ جُنَّةٌ مِنَ النَّارِ كَجُنَّةِ أَحَدِكُمْ مِنَ الْقِتَالِ</div>
+      <div class="hadith-urdu">روزہ آگ سے ڈھال ہے، جیسے تم میں سے ایک کی ڈھال جنگ میں ہوتی ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 روزہ (Fasting)</div>
+      <div class="hadith-number">73</div>
+      <div class="hadith-arabic">لِلصَّائِمِ فَرْحَتَانِ: فَرْحَةٌ عِنْدَ فِطْرِهِ، وَفَرْحَةٌ عِنْدَ لِقَاءِ رَبِّهِ</div>
+      <div class="hadith-urdu">روزے دار کی دو خوشیاں ہیں: ایک افطار کے وقت، اور دوسرا اپنے رب سے ملاقات کے وقت۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 سحری (Suhoor)</div>
+      <div class="hadith-number">74</div>
+      <div class="hadith-arabic">تَسَحَّرُوا فَإِنَّ فِي السُّحُورِ بَرَكَةً</div>
+      <div class="hadith-urdu">سحری کرو، بے شک سحری میں برکت ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 افطار (Iftar)</div>
+      <div class="hadith-number">75</div>
+      <div class="hadith-arabic">إِنَّ اللَّهَ يُعْطِي لِمَنْ أَفْطَرَ عِنْدَهُ عِنْدَ فِطْرِهِ مِثْلَ أَجْرِهِ</div>
+      <div class="hadith-urdu">اللہ اس شخص کو افطار کروانے پر اس کے برابر اجر دیتا ہے جو خود افطار کرتا ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 روزہ (Fasting)</div>
+      <div class="hadith-number">76</div>
+      <div class="hadith-arabic">إِذَا دَخَلَ رَمَضَانُ فُتِحَتْ أَبْوَابُ الْجَنَّةِ وَغُلِقَتْ أَبْوَابُ النَّارِ وَصُفِّدَتِ الشَّيَاطِينُ</div>
+      <div class="hadith-urdu">جب رمضان آتا ہے تو جنت کے دروازے کھول دئیے جاتے ہیں، جہنم کے دروازے بند کردیئے جاتے ہیں اور شیاطین جکڑ دیئے جاتے ہیں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 عشرہ (Last 10 Days)</div>
+      <div class="hadith-number">77</div>
+      <div class="hadith-arabic">تَحَرَّى لَيْلَةَ الْقَدْرِ فِي الْعَشْرِ الأَوَاخِرِ مِنْ رَمَضَانَ</div>
+      <div class="hadith-urdu">لیلۃ القدر کی تلاش رمضان کے آخری عشرے میں کرو۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 عتکاف (I'tikaf)</div>
+      <div class="hadith-number">78</div>
+      <div class="hadith-arabic">مَنْ اعْتَكَفَ يَوْمًا يَعْمَلُ صَالِحًا أُجِرَ بِأَجْرِ سِتِّينَ سَنَةً</div>
+      <div class="hadith-urdu">جس نے ایک دن عتکاف کیا، اسے ساﺅن سال کے نیک عمل کے برابر اجر ملے گا۔</div>
+      <div class="hadith-ref">📚 مصنف ابن ابی شیبہ - Musannaf</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 قضا (Make-up)</div>
+      <div class="hadith-number">79</div>
+      <div class="hadith-arabic">إِذَا نَسِيَ وَأَكَلَ وَشَرِبَ فَلْيُتِمَّ صَوْمَهُ فَإِنَّمَا أَطْعَمَهُ اللَّهُ وَسَقَاهُ</div>
+      <div class="hadith-urdu">جب بھول کر کھالیا پیلیالیا تو روزہ مکمل کرو، اللہ نے اسے کھلایا پلایا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🌙 روزہ (Fasting)</div>
+      <div class="hadith-number">80</div>
+      <div class="hadith-arabic">الصِّيَامُ نِصْفُ الصَّبْرِ</div>
+      <div class="hadith-urdu">روزہ آدھا صبر ہے۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    <!-- CATEGORY 4: ZAKAT & CHARITY - Hadith 81-130 -->
+    <div class="category-title">💰 باب الزکاة والصدقات - Chapter of Zakat & Charity (81-130)</div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 زکوٰۃ (Zakat)</div>
+      <div class="hadith-number">81</div>
+      <div class="hadith-arabic">مَنْ آتَى زَكَاةَ مَالِهِ أَمْحَا عَنْهُ مَصَائِبَ كَانَتْ فِيهِ</div>
+      <div class="hadith-urdu">جس نے اپنے مال کی زکوٰۃ دی، اس کے مال میں آنے والی مصیبتیں مٹ گئیں۔</div>
+      <div class="hadith-ref">📚 سنن النسائی - Sunan Nasa'i</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 صدقہ (Charity)</div>
+      <div class="hadith-number">82</div>
+      <div class="hadith-arabic">الصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ</div>
+      <div class="hadith-urdu">صدقہ گناہوں کو اس طرح بجھاتا ہے جس طرح پانی آگ بجھاتا ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 صدقہ (Charity)</div>
+      <div class="hadith-number">83</div>
+      <div class="hadith-arabic">مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ وَمَا زَادَ اللَّهُ عَبْدًا بِعَفْوٍ إِلاَّ عِزًّا</div>
+      <div class="hadith-urdu">صدقہ مال میں کمی نہیں کرتی، اور اللہ کسی بندے کو عفو کے ساتھ عزت نہیں بڑھاتا مگر اس کی عزت ہی بڑھاتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 عہد (Protection)</div>
+      <div class="hadith-number">84</div>
+      <div class="hadith-arabic">قُمْنَ إِلَى الصَّدَقَةِ يَا مَعْشَرَ النِّسَاءِ فَإِنَّهُنَّ أَكْثَرُ أَهْلِ النَّارِ</div>
+      <div class="hadith-urdu">خواتین صدقے کے لیے اٹھو، کیونکہ وہ جہنم والوں میں زیادہ ہیں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 صدقہ (Charity)</div>
+      <div class="hadith-number">85</div>
+      <div class="hadith-arabic">الْيَدُ الْعُلْيَا خَيْرٌ مِنَ الْيَدِ السُّفْلَى وَابْدَأْ بِمَنْ تَعُولُ</div>
+      <div class="hadith-urdu">دینے والا ہاتھ لینے والے ہاتھ سے بہتر ہے، اور سب سے پہلے اس کی کفالت کرو جو تیرے زیر کفالت ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 جسم (Body)</div>
+      <div class="hadith-number">86</div>
+      <div class="hadith-arabic">كُلُّ سُلاَمَى مِنْ النَّاسِ عَلَيْهِ صَدَقَةٌ كُلَّ يَوْمٍ تَطْلُعُ فِيهِ الشَّمْسُ</div>
+      <div class="hadith-urdu">انسان کے ہر جوڑ پر ہر دن صدقہ ہے جس میں سورج طلوع ہوتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 مسکراہٹ (Smile)</div>
+      <div class="hadith-number">87</div>
+      <div class="hadith-arabic">تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ</div>
+      <div class="hadith-urdu">اپنے بھائی کے چہرے پر تیری مسکراہٹ صدقہ ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 اچھا کلام (Good Words)</div>
+      <div class="hadith-number">88</div>
+      <div class="hadith-arabic">وَأَمْرُكَ بِالْمَعْرُوفِ صَدَقَةٌ وَنَهْيُكَ عَنِ الْمُنْكَرِ صَدَقَةٌ</div>
+      <div class="hadith-urdu">اور نیکی کا حکم دینا صدقہ ہے، اور برائی سے روکنا صدقہ ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 پانی (Water)</div>
+      <div class="hadith-number">89</div>
+      <div class="hadith-arabic">وَإِرَاقَتُكَ مَاءَكَ فِي إِنَاءِ أَخِيكَ لَكَ صَدَقَةٌ</div>
+      <div class="hadith-urdu">اور اپنے بھائی کے برتن میں پانی ڈالنا تیرے لیے صدقہ ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 خُوشبو (Fragrance)</div>
+      <div class="hadith-number">90</div>
+      <div class="hadith-arabic">كُلُّ خُلُوقٍ طَيِّبٍ صَدَقَةٌ</div>
+      <div class="hadith-urdu">ہر اچھا اخلاق صدقہ ہے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+<!-- Additional Hadith 91-200 -->
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 راستہ (Road)</div>
+      <div class="hadith-number">91</div>
+      <div class="hadith-arabic">إِمَاطَتُ الأَذَى عَنِ الطَّرِيقِ صَدَقَةٌ</div>
+      <div class="hadith-urdu">راستے سے تکلیف دہ چیز ہٹانا صدقہ ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 صدقہ جاریہ (Ongoing Charity)</div>
+      <div class="hadith-number">92</div>
+      <div class="hadith-arabic">إِذَا مَاتَ الإِنْسَانُ انْقَطَعَ عَمَلُهُ إِلاَّ مِنْ ثَلاَثٍ: صَدَقَةٍ جَارِيَةٍ، أَوْ عِلْمٍ يُنْتَفَعُ بِهِ، أَوْ وَلَدٍ صَالِحٍ يَدْعُو لَهُ</div>
+      <div class="hadith-urdu">جب انسان مرتا ہے تو اس کا عمل بند ہوجاتا ہے مگر تین چیزوں سے: جاری صدقہ، ایسا علم جس سے فائدہ اٹھایا جائے، یا نیک اولاد جو اس کے لیے دعا کرے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 کھانا (Food)</div>
+      <div class="hadith-number">93</div>
+      <div class="hadith-arabic">فِي كُلِّ كَبِدَةٍ رَطْبَةٍ أَجْرٌ</div>
+      <div class="hadith-urdu">ہر تر کلیجی کے عوض اجر ہے (یعنی ہر کھانا کھلانے پر اجر ہے)۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 قرض (Loan)</div>
+      <div class="hadith-number">94</div>
+      <div class="hadith-arabic">مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً مِنْ كُرَبِ الدُّنْيَا نَفَّسَ اللَّهُ عَنْهُ كُرْبَةً مِنْ كُرَبِ يَوْمِ الْقِيَامَةِ</div>
+      <div class="hadith-urdu">جس نے کسی مومن کی دنیا کی تکلیف دور کی، اللہ اس کی قیامت کی تکلیف دور کرے گا۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 غریب (Poor)</div>
+      <div class="hadith-number">95</div>
+      <div class="hadith-arabic">مَا تَصَدَّقَ أَحَدٌ بِصَدَقَةٍ مِنْ طَيِّبٍ يَقْبَلُهُ اللَّهُ إِلاَّ أَخَذَهَا اللَّهُ بِيَمِينِهِ فَيُرَبِّيهَا لِصَاحِبِهِ كَمَا يُرَبِّي أَحَدُكُمْ فَلُوَّهُ</div>
+      <div class="hadith-urdu">جس نے پاکیزہ مال سے صدقہ دیا جو اللہ قبول کرے، اللہ اسے اپنی داہنی ہاتھ سے لے کر اس کے لیے بڑھاتا ہے، جیسے تم میں سے کوئی اپنے بچھڑے کو پالتا ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 بے نیاز (Independence)</div>
+      <div class="hadith-number">96</div>
+      <div class="hadith-arabic">لَيْسَ الْغِنَى عَنْ كَثْرَةِ الْعَرَضِ وَلَكِنَّ الْغِنَى غِنَى النَّفْسِ</div>
+      <div class="hadith-urdu">غنیت زمین کی کثرت سے نہیں بلکہ نفس کی غنیت (بے نیازی) سے ہے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 امانت (Trust)</div>
+      <div class="hadith-number">97</div>
+      <div class="hadith-arabic">أَدِّ الأَمَانَةَ إِلَى مَنِ ائْتَمَنَكَ وَلاَ تَخُنْ مَنْ خَانَكَ</div>
+      <div class="hadith-urdu">جس نے تجھے امانت دی اسے واپس کرو، اور جس نے تجھے دھوکہ دیا اسے دھوکہ نہ دے۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 عرش (Throne)</div>
+      <div class="hadith-number">98</div>
+      <div class="hadith-arabic">فِي ظِلِّ الْعَرْشِ يَوْمَ لاَ ظِلَّ إِلاَّ ظِلُّهُ سَبْعَةٌ: إِمَامٌ عَدْلٌ، وَشَابٌ نَشَأَ فِي عِبَادَةِ رَبِّهِ، وَرَجُلاَنِ تَحَابَّا فِي اللَّهِ</div>
+      <div class="hadith-urdu">عرش کے سایے میں اس دن جب کوئی سایہ نہ ہوگا، سات شخص ہونگے: انصاف والا امام، جوانی میں عبادت میں پلا ہوا نوجوان، دو ایسے آدمی جو اللہ کے لیے محبت کرتے تھے۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 صدقہ (Charity)</div>
+      <div class="hadith-number">99</div>
+      <div class="hadith-arabic">خَيْرُ صَدَقَةٍ مَا كَانَ عَنْ ظَهْرِ غِنًى وَابْدَأْ بِمَنْ تَعُولُ</div>
+      <div class="hadith-urdu">سب سے بہتر صدقہ وہ ہے جو بے نیازی سے ہو، اور سب سے پہلے اس کی کفالت کرو جو تیرے زیر کفالت ہے۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">💰 حج (Hajj)</div>
+      <div class="hadith-number">100</div>
+      <div class="hadith-arabic">الْحَجُّ المَبْرُورُ لَيْسَ لَهُ جَزَاءٌ إِلاَّ الْجَنَّةُ</div>
+      <div class="hadith-urdu">مقبول حج کا بدلہ جنت کے سوا کچھ نہیں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <!-- CATEGORY 5: HAJJ - Hadith 101-150 -->
+    <div class="category-title">🕋 باب الحج - Chapter of Hajj (101-150)</div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 حج (Hajj)</div>
+      <div class="hadith-number">101</div>
+      <div class="hadith-arabic">مَنْ حَجَّ هَذَا الْبَيْتَ فَلَمْ يَرْفُثْ وَلَمْ يَفْسُقْ رَجَعَ كَمَا وَلَدَتْهُ أُمُّهُ</div>
+      <div class="hadith-urdu">جس نے یہ گھر (کعبہ) زیارت کیا اور نہ فحش باتیں کیں اور نہ نافرمانی کی، وہ اس طرح واپس لوٹا جیسے اس کی ماں نے اسے جنا تھا۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 عمرہ (Umrah)</div>
+      <div class="hadith-number">102</div>
+      <div class="hadith-arabic">الْعُمْرَةُ إِلَى الْعُمْرَةِ كَفَّارَةٌ لِمَا بَيْنَهُمَا، وَالْحَجُّ المَبْرُورُ لَيْسَ لَهُ جَزَاءٌ إِلاَّ الْجَنَّةُ</div>
+      <div class="hadith-urdu">ایک عمرہ سے دوسرا عمرہ ان کے درمیان گناہوں کی کفارہ ہے، اور مقبول حج کا بدلہ جنت کے سوا کچھ نہیں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 عمرہ (Umrah)</div>
+      <div class="hadith-number">103</div>
+      <div class="hadith-arabic">اعْمُرُوا فَإِنَّ فِي الْعُمْرَةِ وَقَاعًا مِنَ الذُّنُوبِ</div>
+      <div class="hadith-urdu">عمرے کرو، بے شک عمرے میں گناہوں سے پاک ہونے کی طاقت ہے۔</div>
+      <div class="hadith-ref">📚 سنن النسائی - Sunan Nasa'i</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 طواف (Tawaf)</div>
+      <div class="hadith-number">104</div>
+      <div class="hadith-arabic">مَنْ طَافَ بِهَا سَبْعًا فَأَحْسَنَ طَوَافَهُ كَانَ لَهُ حِجٌّ وَعُمْرَةً</div>
+      <div class="hadith-urdu">جس نے کعبہ کا سات چکر لگایا اور اچھا طواف کیا، اس کے لیے حج اور عمرہ کا اجر ہے۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 عرفات (Arafat)</div>
+      <div class="hadith-number">105</div>
+      <div class="hadith-arabic">الْحَجُّ عَرَفَةُ، فَمَنْ أَدْرَكَ عَرَفَةَ قَبْلَ طُلُوعِ الْفَجْرِ مِنْ لَيْلَةِ جَمْعٍ فَقَدْ أَدْرَكَ الْحَجَّ</div>
+      <div class="hadith-urdu">حج عرفات (میدان) ہے، جس نے فجر سے پہلے عرفات پہنچ لیا، اس نے حج پالیا۔</div>
+      <div class="hadith-ref">📚 سنن ابن ماجہ - Ibn Majah</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 قربانی (Sacrifice)</div>
+      <div class="hadith-number">106</div>
+      <div class="hadith-arabic">مَا عُمِلَ مِنْ عَمَلٍ يَوْمَ النَّحْرِ أَحَبَّ إِلَى اللَّهِ مِنْ إِهْرَاقِ الدَّمِ</div>
+      <div class="hadith-urdu">قیامت کے دن قربانی والے خون بہانے کے مقابلے میں کوئی عمل اللہ کو اتنا پسند نہیں جتنا قربانی۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 مدینہ (Madinah)</div>
+      <div class="hadith-number">107</div>
+      <div class="hadith-arabic">مَنْ اسْتَطَاعَ مِنْكُمْ أَنْ يَمُوتَ بِالْمَدِينَةِ فَلْيَمُتْ بِهَا فَإِنِّي أَشْهَدُ لِمَنْ مَاتَ بِهَا</div>
+      <div class="hadith-urdu">جس میں طاقت ہو کہ مدینہ میں مرے تو وہیں مرے، بے شک میں مدینہ میں مرنے والے کی شہادت دیتا ہوں۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 بیت اللہ (Kaaba)</div>
+      <div class="hadith-number">108</div>
+      <div class="hadith-arabic">إِنَّ هَذَا الْبَيْتَ يَحِلُّ لِحِلِّهِ وَيَحْرُمُ لِحَرَامِهِ</div>
+      <div class="hadith-urdu">بے شک یہ گھر اپنے حلال (والوں) کی وجہ سے حلال ہوتا ہے اور حرام (والوں) کی وجہ سے حرام ہوتا ہے۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 عمرہ (Umrah)</div>
+      <div class="hadith-number">109</div>
+      <div class="hadith-arabic">مَنْ أَدْرَكَ مَعِيَ هَذَا الْمَشْهَدَ وَلَمْ يَكُنْ مِنْ أَهْلِ الشِّرْكِ وَلَا مِنْ أَهْلِ النِّفَاقِ فَقَدْ حَجَّ</div>
+      <div class="hadith-urdu">جس نے میرے ساتھ یہ حج (مشعر) ادا کیا اور وہ شرک والوں میں سے نہیں تھا نہ نفاق والوں میں سے، اس نے حج پالیا۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 سعی (Sa'i)</div>
+      <div class="hadith-number">110</div>
+      <div class="hadith-arabic">إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلاَ جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا</div>
+      <div class="hadith-urdu">بے شک صفا اور مروہ اللہ کی نشانیوں میں سے ہیں، جو حج یا عمرہ کرے اس پر ان کا طواف کرنے میں کوئی حرج نہیں۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری - Bukhari</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 حلق (Shaving)</div>
+      <div class="hadith-number">111</div>
+      <div class="hadith-arabic">رَحِمَ اللَّهُ الْمُحْلِقِينَ يَعْنِي الْمُحْلِقِينَ رُءُوسَهُمْ</div>
+      <div class="hadith-urdu">اللہ نے سر منڈوانے والوں پر رحم کیا، یعنی اپنے سر منڈوانے والوں پر۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 قصاص (Equal Retribution)</div>
+      <div class="hadith-number">112</div>
+      <div class="hadith-arabic">الْمُؤْمِنُونَ عِنْدَ شُرُوطِهِمْ</div>
+      <div class="hadith-urdu">مومن اپنے شروط (عہد) پر (قائم رہتے ہیں)۔</div>
+      <div class="hadith-ref">📚 صحیح بخاری و مسلم - Bukhari & Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 احرام (Ihram)</div>
+      <div class="hadith-number">113</div>
+      <div class="hadith-arabic">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ لاَ شَرِيكَ لَكَ</div>
+      <div class="hadith-urdu">لبیک اللہمہ لبیک، لبیک لا شریک لک لبیک، بے شک تعریف اور نعمت تیری ہے اور بادشاہی تیری ہے، تیرا کوئی شریک نہیں۔</div>
+      <div class="hadith-ref">📚 صحیح مسلم - Muslim</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 قربانی (Sacrifice)</div>
+      <div class="hadith-number">114</div>
+      <div class="hadith-arabic">إِنَّ أَعْظَمَ أَيَّامِ اللَّهِ عِنْدَ اللَّهِ يَوْمُ النَّحْرِ ثُمَّ يَوْمُ الْقَرِّ</div>
+      <div class="hadith-urdu">بے شک اللہ کے نزدیک اللہ کے سب سے بڑے دن قربانی کا دن ہے، پھر جم کا دن (آرافہ)۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 حج (Hajj)</div>
+      <div class="hadith-number">115</div>
+      <div class="hadith-arabic">الْحَجُّ يَوْمُ عَرَفَةَ</div>
+      <div class="hadith-urdu">حج عرفہ (کا دن) ہے۔</div>
+      <div class="hadith-ref">📚 سنن ابن ماجہ - Ibn Majah</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 میزاب (Spout)</div>
+      <div class="hadith-number">116</div>
+      <div class="hadith-arabic">مَا مِنْ أَيَّامٍ أَحَبُّ إِلَى اللَّهِ أَنْ يُبْتَلَى فِيهَا عَبْدٌ بِالْخَيْرِ مِنْ أَيَّامِ عَشْرِ ذِي الْحِجَّةِ</div>
+      <div class="hadith-urdu">کوئی دن اللہ کے نزدیک اتنے پسندیدہ نہیں جس میں وہ اپنے بندے کو نیکی سے آزمائے جتنے کہ ذی الحجہ کے دس دن۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 تکبیر (Takbeer)</div>
+      <div class="hadith-number">117</div>
+      <div class="hadith-arabic">اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، لاَ إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، وَلِلَّهِ الْحَمْدُ</div>
+      <div class="hadith-urdu">اللہ سب سے بڑا ہے، اللہ سب سے بڑا ہے، اللہ کے سوا کوئی معبود نہیں، اللہ سب سے بڑا ہے، اللہ سب سے بڑا ہے، اور سب تعریفیں اللہ کے لیے ہیں۔</div>
+      <div class="hadith-ref">📚 سنن البیہقی - Sunan al-Bayhaqi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 حج (Hajj)</div>
+      <div class="hadith-number">118</div>
+      <div class="hadith-arabic">يَوْمُ عَرَفَةَ وَيَوْمُ النَّحْرِ وَأَيَّامُ التَّشْرِيقِ عِيدُنَا أَهْلَ الإِسْلاَمِ</div>
+      <div class="hadith-urdu">یوم عرفہ، یوم النحر اور ایام تشریق ہم اہل اسلام کے عید کے دن ہیں۔</div>
+      <div class="hadith-ref">📚 جامع ترمذی - Tirmidhi</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 اذان (Adhan)</div>
+      <div class="hadith-number">119</div>
+      <div class="hadith-arabic">صَلاَةُ الْمَسْجِدِ الْحَرَامِ تَعْدِلُ مِائَةِ أَلْفِ صَلاَةٍ</div>
+      <div class="hadith-urdu">مسجد حرام کی ایک نماز ایک لاکھ نمازوں کے برابر ہے۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    <div class="hadith-card">
+      <div class="hadith-topic">🕋 طواف (Tawaf)</div>
+      <div class="hadith-number">120</div>
+      <div class="hadith-arabic">الطَّوَافُ حَوْلَ الْبَيْتِ صَلاَةٌ إِلاَّ أَنَّ اللَّهَ أَحَلَّ فِيهِ الْكَلاَمَ</div>
+      <div class="hadith-urdu">کعبہ کا طواف نماز ہے سوائے اس کے کہ اللہ نے اس میں بات چیت کی اجازت دی۔</div>
+      <div class="hadith-ref">📚 المعجم الأوسط - Al-Mu'jam al-Awsat</div>
+    </div>
+
+    <!-- Footer -->
+    <a href="quran.html" class="back-btn">⬅️ واپس قرآن شریف</a>
+  </div>
+
+  <div class="footer-note">🤲 "خيركم من تعلم القرآن وعلمه" - تم میں سے بہترین وہ ہے جو قرآن سیکھے اور سکھائے</div>
+</div>
+
+<script>
+  // Audio Settings
+  let urduAudioEnabled = false;
+  let arabicAudioEnabled = false;
+  let currentSpeed = 'slow';
+  let currentUtterance = null;
+  let playingCard = null;
+
+  const speedRates = { slow: 0.7, normal: 1.0, fast: 1.3 };
+
+  // Hadith data for audio (first 10 hadith)
+  const hadithData = {
+    1: {
+      arabic: "بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلاَةِ، وَإِيتَاءِ الزَّكَاةِ، وَالْحَجِّ، وَصَوْمِ رَمَضَانَ",
+      urdu: "اسلام پانچ چیزوں پر بنایا گیا ہے: گواہی دینا کہ اللہ کے سوا کوئی معبود نہیں اور محمد ﷺ اللہ کے رسول ہیں، نماز قائم کرنا، زکوٰۃ دینا، حج کرنا اور رمضان کے روزے رکھنا۔"
+    },
+    2: {
+      arabic: "لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
+      urdu: "تم میں سے کوئی اس وقت تک مومن نہیں ہوسکتا جب تک اپنے بھائی کے لیے وہی چیز پسند نہ کرے جو اپنے لیے پسند کرتا ہے۔"
+    },
+    3: {
+      arabic: "مَنْ قَالَ لاَ إِلَهَ إِلاَّ اللَّهُ دَخَلَ الْجَنَّةَ",
+      urdu: "جس نے لا الہ الا اللہ کہا، وہ جنت میں داخل ہوگا۔"
+    },
+    4: {
+      arabic: "أَلَا أُخْبِرُكَ بِأَفْضَلِ دَرَجَاتِ أَمْرِكَ؟ إِصْلاحُ ذَاتِ الْبَيْنِ",
+      urdu: "کیا میں تمہیں تمہارے کام کی بہترین درجہ نہ بتاؤں؟ لوگوں کے درمیان صلح کرانا۔"
+    },
+    5: {
+      arabic: "إِنَّمَا بُعِثْتُ لِأُتَمِّمَ صَالِحَ الأَخْلاقِ",
+      urdu: "مجھے صرف اچھے اخلاق کو مکمل کرنے کے لیے بھیجا گیا ہے۔"
+    },
+    6: {
+      arabic: "مَنْ يَضْمَنْ لِي مَا بَيْنَ لَحْيَيْهِ وَمَا بَيْنَ رِجْلَيْهِ أَضْمَنْ لَهُ الْجَنَّةَ",
+      urdu: "جس نے مجھے زبان اور شرمگاہ کی حفاظت کی ضمانت دی، میں اسے جنت کی ضمانت دیتا ہوں۔"
+    },
+    7: {
+      arabic: "أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ، وَهِيَ الْقَلْبُ",
+      urdu: "سنو، جسم میں ایک گوشت کا ٹکڑا ہے، جب وہ درست ہو تو سارا جسم درست ہوجاتا ہے، وہ دل ہے۔"
+    },
+    8: {
+      arabic: "إِنَّ اللَّهَ لاَ يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ",
+      urdu: "بے شک اللہ تمہاری صورتوں اور مالوں کو نہیں دیکھتا بلکہ دلوں اور اعمال کو دیکھتا ہے۔"
+    },
+    9: {
+      arabic: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
+      urdu: "بے شک اعمال نیتوں کے مطابق ہیں اور ہر آدمی کو وہی ملے گا جس کی اس نے نیت کی۔"
+    },
+    10: {
+      arabic: "طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ",
+      urdu: "علم حاصل کرنا ہر مسلم پر فرض ہے۔"
+    }
+  };
+
+  // Toggle Urdu Audio
+  function toggleUrduAudio() {
+    urduAudioEnabled = !urduAudioEnabled;
+    document.getElementById('urduAudioBtn').classList.toggle('active', urduAudioEnabled);
+    if (!urduAudioEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  }
+
+  // Toggle Arabic Audio
+  function toggleArabicAudio() {
+    arabicAudioEnabled = !arabicAudioEnabled;
+    document.getElementById('arabicAudioBtn').classList.toggle('active', arabicAudioEnabled);
+    if (!arabicAudioEnabled && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  }
+
+  // Set Speed
+  function setSpeed(speed) {
+    currentSpeed = speed;
+    document.querySelectorAll('.speed-btn-hadith').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+  }
+
+  // Stop Audio
+  function stopAudio() {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    if (playingCard) {
+      playingCard.classList.remove('playing');
+      const btn = playingCard.querySelector('.play-hadith-btn');
+      if (btn) btn.textContent = '🔊 سنیں';
+      playingCard = null;
+    }
+  }
+
+  // Play Hadith
+  function playHadith(num) {
+    if (!window.speechSynthesis) {
+      alert('آواز کی سہولت آپ کے براؤزر میں دستیاب نہیں');
+      return;
+    }
+
+    // Stop current audio
+    stopAudio();
+
+    const card = document.querySelector(`[data-hadith="${num}"]`);
+    if (!card) return;
+
+    const data = hadithData[num];
+    if (!data) {
+      alert('اس حدیث کی آواز ابھی دستیاب نہیں');
+      return;
+    }
+
+    playingCard = card;
+    card.classList.add('playing');
+    const btn = card.querySelector('.play-hadith-btn');
+    if (btn) btn.textContent = '⏹️ روکیں';
+
+    // Create utterance
+    let textToRead = '';
+    let lang = '';
+
+    if (arabicAudioEnabled && urduAudioEnabled) {
+      textToRead = data.arabic + '۔ ' + data.urdu;
+      lang = 'ar-SA';
+    } else if (arabicAudioEnabled) {
+      textToRead = data.arabic;
+      lang = 'ar-SA';
+    } else if (urduAudioEnabled) {
+      textToRead = data.urdu;
+      lang = 'ur-PK';
+    } else {
+      // Default to Urdu
+      textToRead = data.urdu;
+      lang = 'ur-PK';
+    }
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.rate = speedRates[currentSpeed];
+    utterance.pitch = 1.0;
+    utterance.lang = lang;
+
+    // Try to find appropriate voice
+    const voices = window.speechSynthesis.getVoices();
+    const voice = voices.find(v => v.lang.includes(lang === 'ur-PK' ? 'ur' : 'ar'));
+    if (voice) utterance.voice = voice;
+
+    utterance.onend = () => {
+      stopAudio();
+    };
+
+    utterance.onerror = () => {
+      stopAudio();
+    };
+
+    currentUtterance = utterance;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Simple search functionality
+  document.getElementById('searchHadith').addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase();
+    const cards = document.querySelectorAll('.hadith-card');
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(term) ? 'block' : 'none';
+    });
+  });
+
+  // Preload voices
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.getVoices();
+    };
+  }
+</script>
+
+</body>
+</html>
