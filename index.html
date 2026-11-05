@@ -292,6 +292,12 @@
                     <div class="app-name">Photo With AI</div>
                     <div class="app-desc">AI image generation</div>
                 </div>
+
+                <div class="app-card" onclick="openApp('ai-chat')">
+                    <div class="app-icon">🤖</div>
+                    <div class="app-name">AI Chat</div>
+                    <div class="app-desc">Chat with local Ollama AI</div>
+                </div>
             </div>
         </div>
     </div>
@@ -399,6 +405,7 @@
                 case 'quran': url = '/quran/'; break;
                 case 'photostore': url = '/photostore/'; break;
                 case 'photoai': url = '/photoai/'; break;
+                case 'ai-chat': url = '/ai-chat/'; break;
                 default: return;
             }
 

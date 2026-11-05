@@ -4,7 +4,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const app = express();
-const PORT = process.env.PORT || 1001;
+const PORT = process.env.PORT || 2000;
 
 // Middleware
 app.use(cors());
@@ -335,6 +335,14 @@ app.use('/photoai', express.static(path.join(__dirname, 'frontend', 'photo-ai-fr
 // Serve hub-specific index.html for Photo AI (no PWA)
 app.get('/photoai', (req, res) => {
     res.sendFile(path.join(__dirname, 'Photo with AI', 'index-hub.html'));
+});
+
+// AI Chat at /ai-chat/ (uses Ollama local AI)
+app.use('/ai-chat', express.static(path.join(__dirname, 'frontend', 'ai-chat')));
+
+// SPA fallback for AI Chat
+app.get('/ai-chat/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'ai-chat', 'index.html'));
 });
 
 // SPA fallback for each app
