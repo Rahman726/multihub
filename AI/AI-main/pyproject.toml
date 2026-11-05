@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "buffy-cli"
+version = "0.1.0"
+description = "A Codex-like coding agent CLI powered by local Ollama models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "rich>=13.0",
+    "click>=8.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+buffy = "buffy.cli.main:app"
+
+[tool.setuptools.packages.find]
+include = ["buffy*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

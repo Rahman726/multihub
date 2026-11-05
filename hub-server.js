@@ -337,14 +337,6 @@ app.get('/photoai', (req, res) => {
     res.sendFile(path.join(__dirname, 'Photo with AI', 'index-hub.html'));
 });
 
-// AI Chat App at /ai-chat/
-app.use('/ai-chat', express.static(path.join(__dirname, 'frontend', 'ai-chat')));
-
-// SPA fallback for AI Chat
-app.get('/ai-chat/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'ai-chat', 'index.html'));
-});
-
 // SPA fallback for each app
 app.get('/quiz/*', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'speedy-quiz', 'index.html')));
 app.get('/quran/*', (req, res) => res.sendFile(path.join(__dirname, 'frontend', 'quran-frontend', 'index.html')));
